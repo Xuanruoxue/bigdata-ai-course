@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent · 上下文 · Skill 三概念关系地图</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Claude / Anthropic design tokens（数值见 concept-microcourse 技能 references/design-tokens.md） */
+:root{
+  --canvas:#faf9f5;--soft:#f5f0e8;--card:#efe9de;--strong:#e8e0d2;
+  --dark:#181715;--dark-elev:#252320;--dark-soft:#1f1e1b;
+  --ink:#141413;--body:#3d3d3a;--body-strong:#252523;--muted:#6c6a64;--muted-soft:#8e8b82;
+  --on-primary:#ffffff;--on-dark:#faf9f5;--on-dark-soft:#a09d96;
+  --hair:#e6dfd8;--hair-soft:#ebe6df;
+  --primary:#cc785c;--primary-active:#a9583e;--primary-disabled:#e6dfd8;
+  --teal:#5db8a6;--amber:#e8a55a;--success:#5db872;--warning:#d4a017;--error:#c64545;
+  --r-xs:4px;--r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:9999px;
+  --s-xxs:4px;--s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:24px;--s-xl:32px;--s-xxl:48px;--s-section:96px;
+  --font-display:"Cormorant Garamond",Georgia,"Noto Serif SC","Songti SC",SimSun,serif;
+  --font-sans:"Inter","Styrene B",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --font-mono:"JetBrains Mono","Berkeley Mono",ui-monospace,Consolas,"Cascadia Code",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--body);font-family:var(--font-sans);font-size:16px;line-height:1.55;font-weight:400;-webkit-font-smoothing:antialiased}
+.display-xl{font-family:var(--font-display);font-weight:500;font-size:64px;line-height:1.05;letter-spacing:-1.5px;color:var(--ink)}
+.display-md{font-family:var(--font-display);font-weight:500;font-size:36px;line-height:1.15;letter-spacing:-.5px;color:var(--ink)}
+.eyebrow{font-family:var(--font-sans);font-weight:500;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--primary)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--s-xl)}
+@media(max-width:1024px){.display-xl{font-size:48px;line-height:1.1;letter-spacing:-1px}.display-md{font-size:28px;line-height:1.2;letter-spacing:-.3px}}
+@media(max-width:720px){.display-xl{font-size:36px;line-height:1.15;letter-spacing:-.5px}.wrap{padding:0 var(--s-lg)}}
+nav{position:sticky;top:0;z-index:20;background:var(--canvas);border-bottom:1px solid var(--hair-soft)}
+nav .in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:var(--s-xxs);padding:0 var(--s-xl);overflow-x:auto}
+nav .mark{font-family:var(--font-sans);font-weight:500;font-size:18px;line-height:1.4;color:var(--ink);margin-right:auto;white-space:nowrap;padding:16px 0}
+nav .mark .s{color:var(--primary)}
+nav a{white-space:nowrap;font-weight:500;font-size:14px;line-height:1.4;color:var(--muted);text-decoration:none;padding:18px var(--s-sm)}
+nav a:hover{color:var(--primary)}
+@media(max-width:720px){nav .in{padding:0 var(--s-lg)}}
+.hero{padding:var(--s-xxl) 0 var(--s-section);max-width:980px}
+.hero .eyebrow{margin-bottom:var(--s-lg)}
+.hero h1{margin:0 0 var(--s-lg)}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero .sub{font-size:16px;line-height:1.55;color:var(--muted);max-width:720px;margin:0 0 var(--s-xl)}
+.hero .sub b{color:var(--body-strong)}
+.hero .meta{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.hero .meta span:not(:last-child)::after{content:"／";color:var(--primary);margin:0 var(--s-sm)}
+section{padding-top:var(--s-section);max-width:1200px}
+.k{display:flex;align-items:baseline;gap:var(--s-lg);margin-bottom:var(--s-xl)}
+.k .n{font-family:var(--font-mono);font-weight:400;font-size:12px;line-height:1.4;letter-spacing:1.5px;color:var(--primary);padding-top:6px}
+.k h2{margin:0}
+.k .sub{font-family:var(--font-display);font-weight:500;font-size:22px;line-height:1.3;color:var(--muted-soft)}
+.pcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-xl)}
+.pcard .h{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink);margin:0 0 var(--s-xs)}
+.pcard p{font-size:14px;line-height:1.55;color:var(--body);margin:0}
+.pcard p b{color:var(--body-strong);font-weight:500}
+.pcard a{color:var(--primary)}
+.mininote{font-size:14px;line-height:1.55;color:var(--muted);margin:var(--s-md) 0 0}
+.mininote b{color:var(--body-strong)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-md);margin-top:var(--s-md)}
+@media(max-width:720px){.pair{grid-template-columns:1fr}}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-md);margin-top:var(--s-lg)}
+@media(max-width:900px){.trio{grid-template-columns:1fr}}
+.goal{background:var(--strong);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-sm) var(--s-lg);text-align:center;color:var(--ink);font-weight:500;font-size:15px;max-width:640px;margin:0 auto}
+.goal .sub{font-size:13px;line-height:1.55;color:var(--muted);font-weight:400;font-family:var(--font-sans)}
+.darrow{display:block;text-align:center;color:var(--muted-soft);font-size:14px;margin:6px 0}
+.tag{display:block;text-align:center;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--primary);margin-bottom:var(--s-xs)}
+.eq{border-top:1px solid var(--hair);margin-top:var(--s-md)}
+.cmp{width:100%;border-collapse:collapse;margin-top:var(--s-md);font-size:14px;line-height:1.55}
+.cmp th{font-weight:500;font-size:12px;line-height:1.4;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);text-align:left;padding:var(--s-sm) var(--s-md);border-bottom:1px solid var(--strong)}
+.cmp td{padding:var(--s-md);border-bottom:1px solid var(--hair-soft);color:var(--body);vertical-align:top}
+.cmp td b{color:var(--body-strong);font-weight:500}
+.cmp td:first-child{font-weight:500;color:var(--ink);white-space:nowrap}
+.cmp tr:last-child td{border-bottom:none}
+@media(max-width:720px){.cmp{font-size:13px}.cmp td:first-child{white-space:normal}}
+.coral-band{background:var(--primary);color:var(--on-primary);border-radius:var(--r-xl);padding:var(--s-xl)}
+.coral-band .en{font-family:var(--font-display);font-weight:500;font-size:22px;line-height:1.35;margin:0}
+.coral-band .zh{font-size:14px;line-height:1.55;margin:var(--s-md) 0 0;opacity:.95}
+ul.tips{list-style:none;padding:0;margin:var(--s-md) 0 0}
+ul.tips li{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--primary);border-radius:var(--r-md);padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-sm);font-size:14px;line-height:1.6}
+ul.tips li b{color:var(--ink)}
+ul.tips .q{display:block;font-weight:500;color:var(--ink);font-size:15px;line-height:1.4;margin-bottom:var(--s-xs)}
+footer{background:var(--dark);margin-top:var(--s-section)}
+footer .in{max-width:1200px;margin:0 auto;padding:var(--s-xxl) var(--s-xl) var(--s-xxl)}
+footer .lab{font-weight:500;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--on-dark)}
+footer p{font-size:13px;line-height:1.55;color:var(--on-dark-soft);margin:var(--s-sm) 0 0}
+footer a{color:var(--primary);text-decoration:none}
+footer a:hover{color:#e0a288}
+@media(max-width:720px){footer .in{padding:var(--s-xxl) var(--s-lg)}}
+</style>
+</head>
+<body>
+
+<nav><div class="in">
+  <span class="mark">Agent · Context <span class="s">&</span> Skill</span>
+  <a href="#three">三问</a><a href="#fig">关系图</a><a href="#tab">一览表</a><a href="#keys">两条主线</a><a href="#demo">真实链路</a><a href="#ask">思考题</a>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">概念关系地图 · 核对 2026-09-06</div>
+    <h1 class="display-xl">上下文是 Agent 的桌面，<br><em>Skill</em> 是抽屉里的规范手册</h1>
+    <p class="sub">一句话：<b>Agent</b> 是“干活的执行者”，<b>上下文</b>是它此刻唯一能看到的“桌面”，<b>Skill</b> 是收纳了成熟做法的“抽屉”——平时不占地方，需要用哪个就打开哪个。三者不是并列零件，而是<b>执行者 → 工作台 → 知识库</b>的咬合关系。</p>
+    <div class="meta"><span>配套三页速学</span><span>关系主线图解</span><span>来源见页脚</span></div>
+  </header>
+
+  <!-- 01 三个问题 -->
+  <section id="three">
+    <div class="k"><span class="n">01</span><h2 class="display-md">它们各自回答什么问题</h2></div>
+    <div class="trio">
+      <div class="pcard"><p class="h">🤖 Agent 回答“谁来做”</p><p>一个能自己拆步骤、调工具、看反馈、循环推进的系统。定义的关键词是<b>自主决策 + 行动闭环</b>。<br><a href="agent.html">→ 去读 agent.html</a></p></div>
+      <div class="pcard"><p class="h">🗔 上下文回答“能看到什么”</p><p>一次推理能处理的全部 token：系统提示、历史、资料、工具结果。它是模型唯一的<b>工作记忆</b>，也决定它的“注意力预算”。<br><a href="llm-context.html">→ 去读 llm-context.html</a></p></div>
+      <div class="pcard"><p class="h">📦 Skill 回答“经验在哪”</p><p>装着 SKILL.md 的可复用文件夹：把“做某类事的方法”打包，Agent 需要时才按 description 自动加载——<b>可复用的程序性知识</b>。<br><a href="skill.html">→ 去读 skill.html</a></p></div>
+    </div>
+  </section>
+
+  <!-- 02 关系图 -->
+  <section id="fig">
+    <div class="k"><span class="n">02</span><h2 class="display-md">一张图看懂咬合关系</h2></div>
+    <div class="coral-band">
+      <p class="en">一条主线：Agent 在“循环”，上下文在“变”，Skill 负责“该看哪页”的取舍。</p>
+      <p class="zh">用户给目标 → Agent（LLM 循环）决定下一步 → 需要“做某类事的方法”时，按 description 激活对应 Skill，把 SKILL.md 正文读入上下文 → Agent 照流程行动、调用工具 → 工具结果与观察又回填进上下文 → 回到循环。上下文因此是“被 Agent 持续维护的动态工作台”，而 Skill 是控制“什么值得进工作台”的知识封装。</p>
+    </div>
+    <div style="margin-top:var(--s-lg)">
+      <div class="tag">主线流程</div>
+      <div class="goal">🎯 用户目标<br><span class="sub">“帮我学一个概念并出学习页”</span></div>
+      <span class="darrow">↓</span>
+      <div class="goal">🤖 Agent 决策（ReAct 循环）<br><span class="sub">每次“想下一步”都只依据眼前的上下文</span></div>
+      <span class="darrow">↓ 需要成熟做法 → 激活 Skill（只读正文，不背整本）</span>
+      <div class="goal">📦 Skill 进入<b>上下文</b>工作台<br><span class="sub">SKILL.md 步骤 + 按需读取 references / 脚本</span></div>
+      <span class="darrow">↓ 照做 + 调工具（检索来源、查证、生成文件）</span>
+      <div class="goal">👀 观察结果回填上下文，再决定下一步<br><span class="sub">直到完成；完成后的新经验又可写回 Skill，供下次复用</span></div>
+    </div>
+    <p class="mininote">注意两处双向性：<b>上下文决定 Agent 能“想”得多好</b>；<b>Agent 反过来决定把什么塞进上下文</b>（检索哪些、开哪个 Skill、要不要压缩）——这就是为什么 Anthropic 说“上下文工程是 Agent 时代提示工程的进化”。</p>
+  </section>
+
+  <!-- 03 一览表 -->
+  <section id="tab">
+    <div class="k"><span class="n">03</span><h2 class="display-md">关系一览表</h2></div>
+    <table class="cmp">
+      <tr><th></th><th>Agent</th><th>上下文 Context</th><th>Skill</th></tr>
+      <tr><td>回答的问题</td><td>谁来做、下一步做什么</td><td>这一次能依据什么</td><td>这类活的最佳做法从哪来</td></tr>
+      <tr><td>核心机制</td><td>ReAct：思考 → 行动 → 观察，循环推进</td><td>工作记忆：token 上限 + 位置效应（U 型）</td><td>渐进式披露：发现 → 激活 → 执行</td></tr>
+      <tr><td>在本课题中的角色</td><td>执行者：拆任务、查资料、写文件、自我校验</td><td>工作台：当前会话能“看”到与依据的一切</td><td>知识抽屉：concept-microcourse 教 Agent “概念学习页怎么做”</td></tr>
+      <tr><td>对另外两者的作用</td><td>动态决定“往上下文放什么”（含加载哪个 Skill）</td><td>决定了 Agent 思考质量的<b>边界</b>，也是 Skill 加载后的“落点”</td><td>为 Agent 提供“高质量该进上下文的内容”，反哺上下文质量</td></tr>
+      <tr><td>主要风险</td><td>自由度高，错误会随步数放大</td><td>越长越“烂”、越贵、越慢</td><td>description 写不准会“叫不醒”；陌生来源需审计</td></tr>
+    </table>
+  </section>
+
+  <!-- 04 两条主线 -->
+  <section id="keys">
+    <div class="k"><span class="n">04</span><h2 class="display-md">作业要理解的两条主线</h2></div>
+    <div class="pair">
+      <div class="pcard"><p class="h">① 上下文如何影响 Agent 的工作</p><p>Agent 的每一轮思考都受限于当前上下文：<b>该检索的没检索 → 它不知道</b>；<b>塞进太多噪音 → 它“抓不住重点”</b>（U 型 / 上下文腐烂）；<b>历史太长 → 早期定的规则被挤到中间失效</b>。所以工程重点不在“模型多聪明”，而在“<b>每个推理点给它最小的高信号 token 集</b>”——这正是上下文工程。子代理隔离、压缩、结构化笔记，本质都是在替 Agent 管理这张“桌面”。</p></div>
+      <div class="pcard"><p class="h">② Skill 如何沉淀可复用的任务知识</p><p>把一次成功的做法写成 SKILL.md：步骤固定 → 每次执行结果一致 → 不再“每次从零解释” → 不长期占用上下文（按需加载）→ 随仓库做版本管理、可分享。它就是<b>把专家经验编码成可执行知识</b>：第一次手工教会 Agent，之后由 Skill 批量“教会”后续每次会话——学习成果因此被沉淀，而不是留在某次对话里。</p></div>
+    </div>
+  </section>
+
+  <!-- 05 真实链路 -->
+  <section id="demo">
+    <div class="k"><span class="n">05</span><h2 class="display-md">用本仓库串起来</h2><span class="sub">这条学习链路本身就是三者咬合的例子</span></div>
+    <ul class="tips">
+      <li><b class="q">1 · Agent 上场</b>用户下达开放目标：“学习 Agent / 上下文 / Skill，各出一页带自测的 HTML”。工作台（WorkBuddy）里的 Agent 开始规划。</li>
+      <li><b class="q">2 · 上下文工程</b>Agent 没有把整个 GitHub 灌进上下文，而是<b>按需检索</b>权威来源、读本仓库文件、用 head/grep 只看关键部分——桌面始终保持“小而准”。</li>
+      <li><b class="q">3 · Skill 激活</b>任务命中 .workbuddy/skills/concept-microcourse 的 description，Agent 只读入 SKILL.md 正文；要排版/出题时才打开 references/design-tokens.md 与 quiz-engine.md——三级渐进式披露。</li>
+      <li><b class="q">4 · 闭环与校验</b>Agent 按 Skill 里的自检清单校验脚本语法、字号下限、id 一致性；发现问题就改。人工最后通读核查来源与表述。</li>
+      <li><b class="q">5 · 沉淀再沉淀</b>产物（agent/llm-context/skill/concept-relationship）提交回仓库；下次学“RAG”“向量数据库”时，同一套 Skill 立刻能复用——<b>经验没有流失在对话里，而是沉淀在仓库里</b>。</li>
+    </ul>
+  </section>
+
+  <!-- 06 思考题 -->
+  <section id="ask">
+    <div class="k"><span class="n">06</span><h2 class="display-md">自己想一想</h2></div>
+    <ul class="tips">
+      <li><span class="q">思考题 1</span><b>装 5 万字噪音进上下文，Agent 会怎样？</b> 结合 U 型效应与上下文腐烂解释：噪音会挤占注意力预算，让系统提示或关键事实“沉底”，Agent 表现下降——问题不在模型，在上下文设计。</li>
+      <li><span class="q">思考题 2</span><b>设计规范写进系统提示 vs 写进 SKILL.md，差别在哪？</b> 前者每会话固定占用窗口（长期成本）；后者平时只占一行简介，命中才读正文——同样的知识，一个“常驻占位”，一个“按需取用”。</li>
+      <li><span class="q">思考题 3</span><b>假如要沉淀一个“周报 Agent”，SKILL.md 的 name 和 description 你写什么？</b> 提示：description 要写清“何时该用、不该用”，例如“仅当用户要求按公司模板生成周报时使用，别用于日报”。</li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  <div class="in">
+    <div class="lab">配套阅读与来源 · 内容核对于 2026-09-06</div>
+    <p>· 本仓库三页速学：<a href="agent.html">agent.html</a> · <a href="llm-context.html">llm-context.html</a> · <a href="skill.html">skill.html</a><br>
+    · Agent 定义：<a href="https://www.anthropic.com/research/building-effective-agents">Anthropic《Building effective agents》</a><br>
+    · 上下文工程：<a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic《Effective context engineering for AI agents》</a>；<a href="https://arxiv.org/abs/2307.03172">Lost in the Middle（arXiv 2307.03172）</a><br>
+    · Skill 格式：<a href="https://agentskills.io/">agentskills.io</a>；<a href="https://www.anthropic.com/news/skills">Anthropic《Introducing Agent Skills》</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

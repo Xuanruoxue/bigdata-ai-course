@@ -216,3 +216,24 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---------- 个人/作业补充 ----------
+# WorkBuddy 项目内本地会话状态与个人日志（skill 源码 .workbuddy/skills/ 需要提交，勿整体忽略）
+.workbuddy/memory/
+.workbuddy/tasks/
+.workbuddy/plugins/
+
+# 系统与编辑器杂项
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
+
+# 凭据与密钥（双保险，与上方 .env 等呼应）
+secrets/
+*.pem
+*.key
+*.p12
+credentials*.json
+*.env.local

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill（技能包）是什么？3 分钟速学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Claude / Anthropic design tokens（数值见 concept-microcourse 技能 references/design-tokens.md） */
+:root{
+  --canvas:#faf9f5;--soft:#f5f0e8;--card:#efe9de;--strong:#e8e0d2;
+  --dark:#181715;--dark-elev:#252320;--dark-soft:#1f1e1b;
+  --ink:#141413;--body:#3d3d3a;--body-strong:#252523;--muted:#6c6a64;--muted-soft:#8e8b82;
+  --on-primary:#ffffff;--on-dark:#faf9f5;--on-dark-soft:#a09d96;
+  --hair:#e6dfd8;--hair-soft:#ebe6df;
+  --primary:#cc785c;--primary-active:#a9583e;--primary-disabled:#e6dfd8;
+  --teal:#5db8a6;--amber:#e8a55a;--success:#5db872;--warning:#d4a017;--error:#c64545;
+  --r-xs:4px;--r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:9999px;
+  --s-xxs:4px;--s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:24px;--s-xl:32px;--s-xxl:48px;--s-section:96px;
+  --font-display:"Cormorant Garamond",Georgia,"Noto Serif SC","Songti SC",SimSun,serif;
+  --font-sans:"Inter","Styrene B",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --font-mono:"JetBrains Mono","Berkeley Mono",ui-monospace,Consolas,"Cascadia Code",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--body);font-family:var(--font-sans);font-size:16px;line-height:1.55;font-weight:400;-webkit-font-smoothing:antialiased}
+.display-xl{font-family:var(--font-display);font-weight:500;font-size:64px;line-height:1.05;letter-spacing:-1.5px;color:var(--ink)}
+.display-md{font-family:var(--font-display);font-weight:500;font-size:36px;line-height:1.15;letter-spacing:-.5px;color:var(--ink)}
+.display-sm{font-family:var(--font-display);font-weight:500;font-size:28px;line-height:1.2;letter-spacing:-.3px;color:var(--ink)}
+.eyebrow{font-family:var(--font-sans);font-weight:500;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--primary)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--s-xl)}
+@media(max-width:1024px){.display-xl{font-size:48px;line-height:1.1;letter-spacing:-1px}.display-md{font-size:28px;line-height:1.2;letter-spacing:-.3px}}
+@media(max-width:720px){.display-xl{font-size:36px;line-height:1.15;letter-spacing:-.5px}.wrap{padding:0 var(--s-lg)}}
+nav{position:sticky;top:0;z-index:20;background:var(--canvas);border-bottom:1px solid var(--hair-soft)}
+nav .in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:var(--s-xxs);padding:0 var(--s-xl);overflow-x:auto}
+nav .mark{font-family:var(--font-sans);font-weight:500;font-size:18px;line-height:1.4;color:var(--ink);margin-right:auto;white-space:nowrap;padding:16px 0}
+nav .mark .s{color:var(--primary)}
+nav a{white-space:nowrap;font-weight:500;font-size:14px;line-height:1.4;color:var(--muted);text-decoration:none;padding:18px var(--s-sm)}
+nav a:hover{color:var(--primary)}
+@media(max-width:720px){nav .in{padding:0 var(--s-lg)}}
+.hero{padding:var(--s-xxl) 0 var(--s-section);max-width:980px}
+.hero .eyebrow{margin-bottom:var(--s-lg)}
+.hero h1{margin:0 0 var(--s-lg)}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero .sub{font-size:16px;line-height:1.55;color:var(--muted);max-width:680px;margin:0 0 var(--s-xl)}
+.hero .sub b{color:var(--body-strong)}
+.hero .meta{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.hero .meta span:not(:last-child)::after{content:"／";color:var(--primary);margin:0 var(--s-sm)}
+section{padding-top:var(--s-section);max-width:1200px}
+.k{display:flex;align-items:baseline;gap:var(--s-lg);margin-bottom:var(--s-xl)}
+.k .n{font-family:var(--font-mono);font-weight:400;font-size:12px;line-height:1.4;letter-spacing:1.5px;color:var(--primary);padding-top:6px}
+.k h2{margin:0}
+.k .sub{font-family:var(--font-display);font-weight:500;font-size:22px;line-height:1.3;color:var(--muted-soft)}
+.coral-band{background:var(--primary);color:var(--on-primary);border-radius:var(--r-xl);padding:var(--s-xxl)}
+.coral-band .en{font-family:var(--font-display);font-weight:500;font-size:24px;line-height:1.3;letter-spacing:-.2px;margin:0}
+.coral-band .zh{font-size:15px;line-height:1.55;margin:var(--s-md) 0 0}
+.coral-band .from{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;margin-top:var(--s-lg);opacity:.85}
+.formula{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:var(--s-xs);margin:var(--s-xl) 0 0}
+.chip{font-size:13px;line-height:1.5;text-align:center;padding:var(--s-sm) var(--s-md);border-radius:var(--r-md);color:var(--ink)}
+.chip b{display:block;font-size:15px;font-weight:500}
+.chip .s{font-size:12px;opacity:.72;font-weight:400}
+.c-dir{background:var(--card);border:1px solid var(--hair)}
+.c-md{background:var(--ink);color:var(--on-dark)}
+.c-mat{background:var(--soft);border:1px solid var(--hair)}
+.c-eq{background:var(--primary);color:var(--on-primary)}
+.plus{color:var(--muted-soft);font-size:18px;font-weight:500}
+.mininote{font-size:14px;line-height:1.55;color:var(--muted);margin:var(--s-md) 0 0}
+.mininote b{color:var(--body-strong)}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-md);margin-top:var(--s-lg)}
+@media(max-width:900px){.trio{grid-template-columns:1fr}}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-md);margin-top:var(--s-md)}
+@media(max-width:720px){.pair{grid-template-columns:1fr}}
+.pcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-xl)}
+.pcard .h{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink);margin:0 0 var(--s-xs)}
+.pcard p{font-size:14px;line-height:1.55;color:var(--body);margin:0}
+.pcard p b{color:var(--body-strong);font-weight:500}
+.pcard .src{font-family:var(--font-mono);font-size:12px;line-height:1.4;letter-spacing:1px;color:var(--primary);margin:0 0 var(--s-sm)}
+.pcard .q{font-family:var(--font-display);font-size:16px;line-height:1.45;color:var(--ink);font-style:italic;margin:0 0 var(--s-sm)}
+.lvl{display:flex;gap:var(--s-md);background:var(--soft);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-sm)}
+.lvl .idx{font-family:var(--font-mono);font-size:12px;line-height:1.4;letter-spacing:1.5px;color:var(--primary);padding-top:2px;flex:none;min-width:26px}
+.lvl b{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink)}
+.lvl .t{font-size:13px;line-height:1.55;color:var(--muted)}
+.scene{display:grid;gap:var(--s-sm);margin-top:var(--s-md)}
+.scene .st{display:flex;gap:var(--s-md);background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-sm) var(--s-lg)}
+.scene .st .ic{flex:none;font-size:18px;padding-top:2px}
+.scene .st p{margin:0;font-size:14px;line-height:1.55}
+.scene .st b{color:var(--ink)}
+.darkcard{background:var(--dark);color:var(--on-dark);border-radius:var(--r-lg);padding:var(--s-lg)}
+.darkcard .dw{font-size:12px;line-height:1.4;color:var(--muted-soft);margin:var(--s-sm) var(--s-sm) var(--s-md)}
+.darkcard .dw b{color:var(--on-dark);font-weight:500}
+pre{font-family:var(--font-mono);font-size:14px;line-height:1.6;margin:0;overflow:auto}
+pre.code{color:#e3ddd0;padding:var(--s-sm)}
+pre.code .c{color:var(--on-dark-soft)}
+pre.code .y{color:var(--amber)}
+pre.code .g{color:var(--teal)}
+.eq{border-top:1px solid var(--hair)}
+.row{display:grid;grid-template-columns:190px 1fr;gap:var(--s-lg);padding:var(--s-md) var(--s-xs);border-bottom:1px solid var(--hair)}
+@media(max-width:720px){.row{grid-template-columns:1fr;gap:var(--s-xxs)}}
+.row .a{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink)}
+.row .a small{display:block;font-weight:400;font-size:13px;line-height:1.4;color:var(--muted-soft)}
+.row .b{font-size:14px;line-height:1.55;color:var(--body)}
+.row .b b{color:var(--body-strong);font-weight:500}
+ul.tips{list-style:none;padding:0;margin:var(--s-md) 0 0}
+ul.tips li{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--primary);border-radius:var(--r-md);padding:var(--s-sm) var(--s-md);margin-bottom:var(--s-xs);font-size:14px;line-height:1.55}
+ul.tips li b{color:var(--ink)}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-sm);margin-top:var(--s-md)}
+@media(max-width:720px){.quick{grid-template-columns:1fr}}
+.qk{display:flex;gap:var(--s-sm);background:var(--soft);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-sm) var(--s-md)}
+.qk .no{font-family:var(--font-mono);font-size:12px;line-height:1.4;color:var(--primary);padding-top:2px}
+.qk p{margin:0;font-size:14px;line-height:1.55}
+.qk b{color:var(--ink)}
+.sub{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 var(--s-md)}
+.sub b{color:var(--body-strong);font-weight:500}
+.pdot{display:inline-block;width:8px;height:8px;border-radius:9999px;vertical-align:1px}
+.qbar{height:6px;background:var(--hair);border-radius:var(--r-pill);overflow:hidden}
+.qbar i{display:block;height:100%;width:0;background:var(--primary);transition:.25s}
+.qstat{display:flex;justify-content:space-between;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:var(--s-sm) 0 var(--s-xxs)}
+.glayer{font-size:13px;line-height:1.4;color:var(--muted);text-align:center;margin-bottom:var(--s-xs)}
+.ghead{display:flex;align-items:center;gap:var(--s-sm);font-weight:500;font-size:16px;line-height:1.4;color:var(--ink);margin:var(--s-xl) 0 var(--s-sm)}
+.ghead .dot{width:9px;height:9px;border-radius:9999px}
+.ghead .cnt{color:var(--on-primary);border-radius:var(--r-pill);font-size:12px;line-height:1.4;padding:2px 10px;font-weight:500;letter-spacing:.5px}
+.ghead .tip{color:var(--muted-soft);font-weight:400;font-size:13px}
+.qbox{background:var(--soft);border:1px solid var(--hair-soft);border-radius:var(--r-lg);padding:var(--s-lg);margin-bottom:var(--s-md)}
+.qt{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink)}
+.qm{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted-soft);margin:var(--s-xxs) 0 var(--s-sm)}
+.opt{display:flex;gap:var(--s-sm);align-items:flex-start;border:1px solid var(--hair);background:var(--canvas);border-radius:var(--r-md);padding:var(--s-sm) var(--s-md);margin:var(--s-xs) 0;cursor:pointer;font-size:14px;line-height:1.55}
+.opt:hover{border-color:#cfc6b8}
+.opt .key{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding-top:2px}
+.opt.r{border-color:var(--success);background:rgba(93,184,114,.12)}
+.opt.r .key{color:var(--success)}
+.opt.w{border-color:var(--error);background:rgba(198,69,69,.09)}
+.opt.w .key{color:var(--error)}
+.expl{display:none;margin-top:var(--s-sm);font-size:14px;line-height:1.55;border-radius:var(--r-md);padding:var(--s-sm) var(--s-md)}
+.expl.show{display:block}
+.expl.ok{background:rgba(93,184,114,.13);color:#276b3e}
+.expl.no{background:rgba(198,69,69,.09);color:#8f2e2e}
+.result{display:none;text-align:center;background:var(--card);border:1px solid var(--hair);border-radius:var(--r-xl);padding:var(--s-xxl);margin-top:var(--s-lg)}
+.result.show{display:block}
+.result .sc{font-family:var(--font-display);font-weight:500;font-size:48px;line-height:1.1;letter-spacing:-1px;color:var(--primary);margin:0}
+.result .gd{font-weight:500;font-size:18px;line-height:1.4;color:var(--ink);margin:var(--s-xs) 0 var(--s-xxs)}
+.result .ms{font-size:14px;line-height:1.55;color:var(--muted)}
+.rtiers{margin:var(--s-lg) auto 0;max-width:420px;text-align:left}
+.rt{display:flex;align-items:center;gap:var(--s-sm);font-size:13px;line-height:1.4;margin-bottom:var(--s-xs)}
+.rt .nm{font-weight:500;width:92px;color:var(--ink)}
+.rt .bar{flex:1;height:6px;background:var(--hair);border-radius:var(--r-pill);overflow:hidden}
+.rt .bar i{display:block;height:100%}
+.rt .nu{font-family:var(--font-mono);font-size:12px;color:var(--muted);width:46px;text-align:right}
+.btn{border:none;background:var(--primary);color:var(--on-primary);border-radius:var(--r-md);padding:12px 20px;height:40px;font-weight:500;font-size:14px;line-height:1;cursor:pointer;font-family:var(--font-sans)}
+.btn:hover{background:var(--primary-active)}
+.wl{font-size:13px;line-height:1.4;color:var(--error);margin-top:var(--s-sm)}
+footer{background:var(--dark);margin-top:var(--s-section)}
+footer .in{max-width:1200px;margin:0 auto;padding:var(--s-xxl) var(--s-xl) var(--s-xxl)}
+footer .lab{font-weight:500;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--on-dark)}
+footer p{font-size:13px;line-height:1.55;color:var(--on-dark-soft);margin:var(--s-sm) 0 0}
+footer a{color:var(--primary);text-decoration:none}
+footer a:hover{color:#e0a288}
+@media(max-width:720px){footer .in{padding:var(--s-xxl) var(--s-lg)}}
+</style>
+</head>
+<body>
+
+<nav><div class="in">
+  <span class="mark">Skill <span class="s">&</span> 技能包</span>
+  <a href="#what">是什么</a><a href="#parts">结构</a><a href="#layer">原理</a><a href="#why">比方</a><a href="#scene">场景</a><a href="#edge">边界</a><a href="#code">最小示例</a><a href="#five">速记</a><a href="#quiz">自测</a>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Skill · Agent Skills · 概念速学 · 核对 2026-09-06</div>
+    <h1 class="display-xl">把“怎么干活”打包，<br>让 Agent <em>现学现用</em></h1>
+    <p class="sub">一句话：Skill（技能包）＝一个装着 <b>SKILL.md（指令）</b> 的文件夹，把做某类事的<b>步骤、知识、甚至脚本</b>打包成<b>可复用单元</b>；Agent 遇到相关任务才按描述加载它——像给新员工的<b>入职手册</b>。</p>
+    <div class="meta"><span>约 3 分钟读完</span><span>图解</span><span>12 题分层自测</span><span>来源见页脚</span></div>
+  </header>
+
+  <!-- 01 是什么 -->
+  <section id="what">
+    <div class="k"><span class="n">01</span><h2 class="display-md">是什么</h2></div>
+    <div class="coral-band">
+      <p class="en">“Skills are folders that include instructions, scripts, and resources that Claude can load when needed. Claude will only access a skill when it’s relevant to the task at hand.”</p>
+      <p class="zh">翻译：Skill 是装着“指令、脚本、资源”的文件夹，Agent 只在任务相关时才加载它——平时并不占地方。</p>
+      <div class="from">Source · Anthropic《Introducing Agent Skills》2025-10-16</div>
+    </div>
+    <div class="formula">
+      <div class="chip c-md">🏷️ 元数据<b>name＋description</b></div>
+      <span class="plus">＋</span>
+      <div class="chip c-dir">📋 指令正文<b>怎么做</b></div>
+      <span class="plus">＋</span>
+      <div class="chip c-mat">🧩 参考/模板<b>需要才读</b></div>
+      <span class="plus">＋</span>
+      <div class="chip c-dir">⚙️ 可选脚本<b>确定性执行</b></div>
+      <span class="plus">＝</span>
+      <div class="chip c-eq">📦 Skill<b>可复用的能力包</b></div>
+    </div>
+    <p class="mininote">2025-12-18，Anthropic 把该格式发布为<b>开放标准（agentskills.io）</b>；GitHub Copilot、Cursor、Gemini CLI、OpenAI Codex 等多家 Agent 产品已兼容同一格式——<b>写一次，到处能用</b>。</p>
+  </section>
+
+  <!-- 02 结构 -->
+  <section id="parts">
+    <div class="k"><span class="n">02</span><h2 class="display-md">解剖：一个 Skill 长什么样</h2></div>
+    <div class="darkcard">
+      <p class="dw">Skill = 一个目录；最简只需 SKILL.md（本仓库的 concept-microcourse 同款结构）</p>
+      <pre class="code">my-skill/
+├── SKILL.md          <span class="c"># 必填：YAML 头 + 指令正文</span>
+├── references/       <span class="c"># 可选：按需读取的参考文档（如设计规范）</span>
+├── scripts/          <span class="c"># 可选：可执行代码</span>
+├── assets/           <span class="c"># 可选：模板等资源</span></pre>
+    </div>
+    <div class="lvl"><span class="idx">01</span><div><b>🏷️ YAML 头 · 最少两行</b><br><span class="t">name（唯一名）与 description（干什么、何时用）。Agent 靠它判断“要不要加载我”。</span></div></div>
+    <div class="lvl"><span class="idx">02</span><div><b>📋 指令正文 · Markdown</b><br><span class="t">一步步教 Agent 怎么干：流程、规范、检查清单。Anthropic 建议单个正文尽量控制在 5k token 内，超长拆到引用文件。</span></div></div>
+    <div class="lvl"><span class="idx">03</span><div><b>📦 周边资源 · 按需引用</b><br><span class="t">同一目录下的 references / scripts / assets，被正文点名才读取；脚本不进上下文、直接执行，保证结果确定。</span></div></div>
+    <p class="mininote">放在仓库的项目级 Skill（如本仓库 <b>.workbuddy/skills/concept-microcourse/</b>）就是同一套规则：<b>SKILL.md 开头写 name 与 description</b>，正文是可复用的工作流程。</p>
+  </section>
+
+  <!-- 03 原理 -->
+  <section id="layer">
+    <div class="k"><span class="n">03</span><h2 class="display-md">核心机制：渐进式披露</h2><span class="sub">Progressive Disclosure</span></div>
+    <div style="margin-top:var(--s-md)">
+      <div class="goal">🏷️ 第 1 级 · 发现：只把每个 skill 的 name / description 放进上下文</div>
+      <span class="darrow">↓ 任务来了，Agent 判断“与描述匹配”</span>
+      <div class="lvl"><span class="idx">2</span><div><b>📋 激活：读取 SKILL.md 全文</b><br><span class="t">完整指令此刻才进入上下文，开始按步骤干活。</span></div></div>
+      <span class="darrow">↓ 步骤需要时才打开</span>
+      <div class="lvl"><span class="idx">3</span><div><b>📦 执行：按需加载脚本 / 参考 / 模板</b><br><span class="t">只在特定子任务命中时读取；代码则直接执行，不进上下文。</span></div></div>
+      <div class="loopback">↺ 平时只占一点点开销；<b>装几十个技能也不怕把上下文撑爆</b></div>
+    </div>
+    <p class="mininote">这正是 Anthropic 强调的“<b>模型在上下文聚焦、信息相关时表现更好</b>”——与“上下文”那页讲的注意力预算是同一件事。</p>
+  </section>
+
+  <!-- 04 比方 -->
+  <section id="why">
+    <div class="k"><span class="n">04</span><h2 class="display-md">打个比方</h2></div>
+    <div class="pair">
+      <div class="pcard"><p class="h">📘 新员工入职手册</p><p>招人时不可能把公司所有规范记在招聘广告里（会爆上下文）。入职手册随取随用：要做报销时翻报销章、要做 PPT 时翻模板章。</p></div>
+      <div class="pcard"><p class="h">🥋 “加载”功夫的功夫片</p><p>Anthropic 内部调侃过：Skill 就像《黑客帝国》里 Neo 一键加载格斗技能——平时不带，需要时“嗞”地进入脑子。</p></div>
+    </div>
+  </section>
+
+  <!-- 05 场景 -->
+  <section id="scene">
+    <div class="k"><span class="n">05</span><h2 class="display-md">一个具体场景</h2><span class="sub">本仓库：concept-microcourse 学习页生成器</span></div>
+    <div class="scene">
+      <div class="st"><span class="ic">1️⃣</span><p><b>用户开口</b>：“学一下大模型的上下文，做一页能自测的 HTML”。</p></div>
+      <div class="st"><span class="ic">2️⃣</span><p><b>自动匹配</b>：Agent 扫描 .workbuddy/skills/，发现 concept-microcourse 的 description 命中“概念速学 HTML”。</p></div>
+      <div class="st"><span class="ic">3️⃣</span><p><b>只读正文</b>：把 SKILL.md 全文读入上下文，按里面 7 步流程组织内容——不靠每次口头重讲。</p></div>
+      <div class="st"><span class="ic">4️⃣</span><p><b>按需开文件</b>：要排版时读 references/design-tokens.md，要出题时读 references/quiz-engine.md。</p></div>
+      <div class="st"><span class="ic">5️⃣</span><p><b>稳定产出</b>：同样的风格、同样的自测引擎，换成任何一个新概念都能复用——这就是“沉淀可复用任务知识”。</p></div>
+    </div>
+    <p class="mininote">同样的事若没有 Skill：每次都把设计规范、测验 JS、排版规则再解释一遍——<b>浪费上下文、且结果漂移</b>。有了 Skill，方法与产出一次比一次一致。</p>
+  </section>
+
+  <!-- 06 边界 -->
+  <section id="edge">
+    <div class="k"><span class="n">06</span><h2 class="display-md">别混淆</h2><span class="sub">边界在哪</span></div>
+    <div class="eq">
+      <div class="row"><div class="a">🛠️ Skill vs MCP 工具<small>Tool</small></div><div class="b">工具回答“<b>能做什么</b>”（读库、发邮件），Skill 回答“<b>怎么做才好</b>”（流程、规范）。两者不同层、常互补：Skill 正文里可以指导 Agent 去调工具。</div></div>
+      <div class="row"><div class="a">💬 Skill vs 系统提示词<small>System Prompt</small></div><div class="b">提示词每会话都得带、长期占上下文；Skill 平时只留 name＋description，<b>命中才加载全文</b>——解决“每会话重讲一遍”的痛点。</div></div>
+      <div class="row"><div class="a">🔎 Skill vs RAG 资料库<small>Retrieval</small></div><div class="b">RAG 检索的是“片段事实”；Skill 更偏<b>程序性知识</b>（怎么做 + 可执行代码）。资料文件可以被 Skill 引用，不是一回事。</div></div>
+      <div class="row"><div class="a">🤖 Skill vs Agent</div><div class="b">Skill 是<b>零件</b>（能力包），Agent 是<b>组织者</b>——它自主决定何时加载哪个 Skill、如何组合使用。</div></div>
+      <div class="row"><div class="a">🎯 触发机制</div><div class="b">Skill <b>不需要用户点名</b>，靠 description 被 Agent 自动匹配。description 写得好不好，直接决定“该用时会不会被叫醒”。</div></div>
+      <div class="row"><div class="a">🧨 安全雷区</div><div class="b">恶意 Skill 里的指令/脚本可能诱导越权或外泄数据。官方建议：<b>只从可信来源安装</b>，对陌生来源要审计其捆绑代码与网络指令。</div></div>
+    </div>
+    <ul class="tips">
+      <li><b>一句话边界</b>：凡是有“稳定的做事方法”且“每次都要重新解释”的活儿，就值得打包成 Skill；不稳定的一次性对话，直接写提示词更省事。</li>
+    </ul>
+  </section>
+
+  <!-- 07 最小示例 -->
+  <section id="code">
+    <div class="k"><span class="n">07</span><h2 class="display-md">最小示例</h2><span class="sub">一个 SKILL.md 只有这么点</span></div>
+    <div class="darkcard">
+      <p class="dw">examples/minimal-skill/SKILL.md（节选）</p>
+      <pre class="code">---
+name: minimal-skill
+description: 把任意文本整理成 3 条要点的摘要。
+ 当用户说“帮我总结 / 提炼要点”时使用。
+---
+## 步骤
+1. 先读全文，提取关键论据。
+2. 输出 3 条要点，每条 ≤ 一行。</pre>
+    </div>
+  </section>
+
+  <!-- 08 五行速记 -->
+  <section id="five">
+    <div class="k"><span class="n">08</span><h2 class="display-md">五行速记</h2></div>
+    <div class="quick">
+      <div class="qk"><span class="no">01</span><p><b>Skill = 含 SKILL.md 的文件夹</b>：YAML 头写 name/description，正文写“怎么做”。</p></div>
+      <div class="qk"><span class="no">02</span><p>本质是<b>程序性知识包</b>：把专家的“做法”沉淀成可复用单元。</p></div>
+      <div class="qk"><span class="no">03</span><p>平时只暴露一行简介，<b>命中才加载全文</b>——省上下文、还稳。</p></div>
+      <div class="qk"><span class="no">04</span><p>和工具互补：工具给“能力”，<b>Skill 给“用法”</b>；Agent 当组织者。</p></div>
+      <div class="qk"><span class="no">05</span><p>安全第一：<b>只装可信来源</b>，陌生 Skill 先审计脚本再放行。</p></div>
+    </div>
+  </section>
+
+  <!-- 09 自测 -->
+  <section id="quiz">
+    <div class="k"><span class="n">09</span><h2 class="display-md">自测</h2><span class="sub">12 题 · 分 3 层</span></div>
+    <p class="sub"><span class="pdot" style="background:#5db872"></span> 入门（基础）→ <span class="pdot" style="background:#d4a017"></span> 进阶（原理）→ <span class="pdot" style="background:#c64545"></span> 挑战（细节辨析）。选完即判对错。<b>达标线：入门 4/4 ＋ 进阶 ≥3 ＋ 挑战 ≥2</b></p>
+    <div class="qbar"><i id="qbarFill"></i></div>
+    <div class="qstat"><span id="qDone">已答 0 / 12</span><span id="qScore">答对 0 题</span></div>
+    <div class="glayer" id="lpill"></div>
+    <div id="quizRoot"></div>
+
+    <div class="result" id="resultBox">
+      <p class="sc" id="resScore"></p>
+      <div class="gd" id="resGrade"></div>
+      <div class="ms" id="resMsg"></div>
+      <div class="rtiers" id="resTiers"></div>
+      <div class="wl" id="resWrong"></div>
+      <div style="margin-top:var(--s-md)"><button class="btn" onclick="restartQuiz()">↻ 再来一次</button></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="in">
+    <div class="lab">可核查来源 · 内容核对于 2026-09-06</div>
+    <p>· Anthropic《Introducing Agent Skills》（发布说明，2025-10-16 / 更新 2025-12-18）：<a href="https://www.anthropic.com/news/skills">anthropic.com/news/skills</a><br>
+    · Anthropic 工程博客《Equipping agents for the real world with Agent Skills》（渐进式披露与开发规范）：<a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a><br>
+    · Agent Skills 开放标准主页（SKILL.md 格式与兼容产品展示）：<a href="https://agentskills.io/">agentskills.io</a><br>
+    · Anthropic 开源示例仓库：<a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a><br>
+    · 本仓库实践：项目级 Skill 位于 <a href="https://github.com/Xuanruoxue/bigdata-ai-course">github.com/Xuanruoxue/bigdata-ai-course</a> 的 .workbuddy/skills/</p>
+    <p style="opacity:.72">页面由 concept-microcourse 技能生成，视觉采用 Anthropic/Claude 设计 token。个人解释与整理经人工核查。</p>
+  </div>
+</footer>
+
+<script>
+/* 测验引擎：三层难度（复用 concept-microcourse 技能 quiz-engine） */
+const LAYERS=[
+  {name:'入门',color:'#5db872'},
+  {name:'进阶',color:'#d4a017'},
+  {name:'挑战',color:'#c64545'}
+];
+const Q=[
+ /* 第一层 · 入门 */
+ {L:0,q:'一个 Skill 的最小形态是什么？',o:['一行超长提示词','一个装有 SKILL.md 的文件夹','一个编译好的程序','一张数据库表'],
+  a:1,e:'Skill 就是一个目录；最简只有 SKILL.md：YAML 头 + 指令正文。'},
+ {L:0,q:'SKILL.md 顶部的 YAML frontmatter 至少要写？',o:['HTML 编码','许可证全文','作者电话','name 与 description（干什么、何时用）'],
+  a:3,e:'name 是唯一标识，description 告诉 Agent “何时该用我”。'},
+ {L:0,q:'关于 SKILL.md 正文，正确的是？',o:['必须把所有内容写在一个文件里','正文可引用同目录的 references / scripts / assets','Skill 不能包含代码','正文越短越好，最好为空'],
+  a:1,e:'内容多了就拆到周边文件，需要时才读；脚本直接执行、不进上下文。'},
+ {L:0,q:'Agent 什么时候才读取一个 Skill 的完整内容？',o:['任何对话一开始就全部读完','当任务与它的 description 匹配时','用户必须手动输入技能名','随机触发'],
+  a:1,e:'平时只有 name/description 在场；命中任务才加载全文——这叫渐进式披露。'},
+ /* 第二层 · 进阶 */
+ {L:1,q:'渐进式披露的三级顺序是？',o:['发现（元数据）→ 激活（读全文）→ 执行（脚本/文件）','执行 → 激活 → 发现','一次全部读入','只读脚本不读正文'],
+  a:0,e:'先知道“有什么”，再判断“要不要用”，最后才“翻开细节”。'},
+ {L:1,q:'相比“把规则写进系统提示词”，Skill 的好处是？',o:['规则只出现一次，命中才占用上下文，不重复刷屏','提示词会变短','回答一定更正确','完全不需要模型阅读'],
+  a:0,e:'同样一套规范，不用每次会话开头都灌一遍，也就少占注意力预算。'},
+ {L:1,q:'为什么 Skill 可以带“可执行代码”？',o:['确定性操作交给代码更可靠，比让模型生成稳定','代码会占满上下文','模型不能读文本','Skill 必须无代码'],
+  a:0,e:'如精确算数、填 PDF 坐标这类事，脚本执行比“token 生成”更稳更省。'},
+ {L:1,q:'“Composable（可组合）”指 Skill 的什么特性？',o:['一个 Skill 只能做一件事','技能之间不能共存','多个技能可叠加，由 Agent 判断何时组合使用','只能由人类手动拼接'],
+  a:2,e:'聚焦的单点技能 + Agent 自动编排 = 复杂任务也能拆解完成。'},
+ /* 第三层 · 挑战 */
+ {L:2,q:'description 写得含糊，主要后果是？',o:['Agent 容易在该用时没“叫醒”它，或误用','文件图标会变','页面会更卡','没有后果'],
+  a:0,e:'触发靠 description 匹配：写得准，才能在对的时候被加载。'},
+ {L:2,q:'Skill 与 MCP 工具的关系，正确的是？',o:['它们完全是一回事','Skill 已经取代 MCP','Skill 内部不能提到工具','两者不同层：Skill 教“怎么做”，MCP 提供“能做什么”，常互补'],
+  a:3,e:'工具是 Agent 的“手脚”，Skill 是“操作手册”；手册里可以指挥手脚。'},
+ {L:2,q:'为什么安装陌生人的 Skill 要谨慎？',o:['其中的指令/脚本可能诱导越权、外泄数据，官方建议只装可信来源','Skill 文件太大','官方无法渲染 Markdown','Skill 需要付费授权'],
+  a:0,e:'Skill 可含可执行代码：等于把程序交给 Agent 跑，先审计再放行。'},
+ {L:2,q:'本仓库的 concept-microcourse 属于哪种 Skill？',o:['项目级 Skill：放在 .workbuddy/skills/ 下，随仓库走','模型自带的参数','一个 MCP 服务器','数据库索引'],
+  a:0,e:'项目级 Skill 与代码一起提交，换台机器克隆仓库即可继续使用。'}
+];
+const LCNT=[4,4,4];
+const TOTAL=12;
+const heads=['基础 · 先懂“是什么”，需全对','原理与实战 · 结构与加载机制','细节辨析 · 边界与安全'];
+let answered=0,correct=0,layerA=[0,0,0],layerC=[0,0,0];
+const letters=['A','B','C','D'];
+function paint(){
+  document.getElementById('qbarFill').style.width=(answered/TOTAL*100)+'%';
+  document.getElementById('qDone').textContent='已答 '+answered+' / '+TOTAL;
+  document.getElementById('qScore').textContent='答对 '+correct+' 题';
+  document.getElementById('lpill').innerHTML=LAYERS.map((l,i)=>
+    '<span style="color:'+l.color+'">● '+l.name+' '+layerA[i]+'/'+LCNT[i]+'</span>').join('　');
+}
+function render(){
+  const root=document.getElementById('quizRoot');
+  root.innerHTML='';let g=0;
+  LAYERS.forEach((ly,l)=>{
+    const items=Q.filter(q=>q.L===l); if(!items.length)return;
+    const h=document.createElement('div');h.className='ghead';
+    h.innerHTML='<span class="dot" style="background:'+ly.color+'"></span>'+ly.name+
+      '<span class="cnt" style="background:'+ly.color+'">'+LCNT[l]+' 题</span><span class="tip">'+heads[l]+'</span>';
+    root.appendChild(h);
+    items.forEach(it=>{
+      g++;
+      const box=document.createElement('div');box.className='qbox';
+      box.innerHTML='<div class="qt">'+g+'. '+it.q+'</div><div class="qm">'+ly.name+' · 单选 · '+g+'/'+TOTAL+'</div>'+
+        it.o.map((op,i)=>'<div class="opt" data-i="'+i+'"><span class="key">'+letters[i]+'</span><span>'+op+'</span></div>').join('')+
+        '<div class="expl"></div>';
+      root.appendChild(box);
+      box.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+        if(box.dataset.done)return;
+        box.dataset.done='1';
+        const pick=+el.dataset.i;answered++;layerA[l]++;
+        const right=pick===it.a;
+        if(right){correct++;layerC[l]++;el.classList.add('r');}
+        else{el.classList.add('w');box.querySelectorAll('.opt')[it.a].classList.add('r');}
+        box.querySelectorAll('.opt').forEach(x=>{if(x!==el&&!(right&&x===el))x.style.opacity=.45;});
+        const ex=box.querySelector('.expl');
+        ex.classList.add('show',right?'ok':'no');
+        ex.innerHTML=(right?'✓ 对':'✗ 答案是 '+letters[it.a])+'：'+it.e;
+        paint();if(answered===TOTAL)showResult();
+      });
+    });
+  });
+}
+function showResult(){
+  const box=document.getElementById('resultBox');box.classList.add('show');
+  document.getElementById('resScore').textContent=correct+' / '+TOTAL;
+  document.getElementById('resTiers').innerHTML=LAYERS.map((l,i)=>
+    '<div class="rt"><span class="nm" style="color:'+l.color+'">'+l.name+'</span>'+
+    '<span class="bar"><i style="width:'+(layerC[i]/LCNT[i]*100)+'%;background:'+l.color+'"></i></span>'+
+    '<span class="nu">'+layerC[i]+' / '+LCNT[i]+'</span></div>').join('');
+  const eOk=layerC[0]===LCNT[0],mOk=layerC[1]>=3,hOk=layerC[2]>=2;
+  let gd,ms;
+  if(correct===TOTAL){gd='满分';ms='三层全通。可以试着为你的常用工作流写一个 Skill 了。';}
+  else if(eOk&&mOk&&hOk){gd='达标通关';ms='基础、原理、细节都过关。';}
+  else if(!eOk){gd='先补基础';ms='入门应 4/4：回到「是什么 / 打个比方」再看一遍。';}
+  else if(!mOk){gd='进阶层没过';ms='重点复习「结构」与「渐进式披露」两节。';}
+  else{gd='差在细节';ms='重点看「别混淆」与安全提示。';}
+  document.getElementById('resGrade').textContent=gd;
+  document.getElementById('resMsg').textContent=ms;
+  const wrong=[];
+  document.querySelectorAll('.qbox').forEach((b,i)=>{if(b.querySelector('.opt.w'))wrong.push(i+1);});
+  document.getElementById('resWrong').textContent=wrong.length?'待复习：第 '+wrong.join('、')+' 题':'';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function restartQuiz(){
+  answered=0;correct=0;layerA.fill(0);layerC.fill(0);
+  document.getElementById('resultBox').classList.remove('show');
+  paint();render();
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+}
+render();paint();
+</script>
+</body>
+</html>

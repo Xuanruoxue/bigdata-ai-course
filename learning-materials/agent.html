@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent 是什么？3 分钟速学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Claude / Anthropic design tokens（数值见 concept-microcourse 技能 references/design-tokens.md） */
+:root{
+  --canvas:#faf9f5;--soft:#f5f0e8;--card:#efe9de;--strong:#e8e0d2;
+  --dark:#181715;--dark-elev:#252320;--dark-soft:#1f1e1b;
+  --ink:#141413;--body:#3d3d3a;--body-strong:#252523;--muted:#6c6a64;--muted-soft:#8e8b82;
+  --on-primary:#ffffff;--on-dark:#faf9f5;--on-dark-soft:#a09d96;
+  --hair:#e6dfd8;--hair-soft:#ebe6df;
+  --primary:#cc785c;--primary-active:#a9583e;--primary-disabled:#e6dfd8;
+  --teal:#5db8a6;--amber:#e8a55a;--success:#5db872;--warning:#d4a017;--error:#c64545;
+  --r-xs:4px;--r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:9999px;
+  --s-xxs:4px;--s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:24px;--s-xl:32px;--s-xxl:48px;--s-section:96px;
+  --font-display:"Cormorant Garamond",Georgia,"Noto Serif SC","Songti SC",SimSun,serif;
+  --font-sans:"Inter","Styrene B",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --font-mono:"JetBrains Mono","Berkeley Mono",ui-monospace,Consolas,"Cascadia Code",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--body);font-family:var(--font-sans);font-size:16px;line-height:1.55;font-weight:400;-webkit-font-smoothing:antialiased}
+.display-xl{font-family:var(--font-display);font-weight:500;font-size:64px;line-height:1.05;letter-spacing:-1.5px;color:var(--ink)}
+.display-md{font-family:var(--font-display);font-weight:500;font-size:36px;line-height:1.15;letter-spacing:-.5px;color:var(--ink)}
+.display-sm{font-family:var(--font-display);font-weight:500;font-size:28px;line-height:1.2;letter-spacing:-.3px;color:var(--ink)}
+.eyebrow{font-family:var(--font-sans);font-weight:500;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--primary)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--s-xl)}
+@media(max-width:1024px){.display-xl{font-size:48px;line-height:1.1;letter-spacing:-1px}.display-md{font-size:28px;line-height:1.2;letter-spacing:-.3px}}
+@media(max-width:720px){.display-xl{font-size:36px;line-height:1.15;letter-spacing:-.5px}.wrap{padding:0 var(--s-lg)}}
+nav{position:sticky;top:0;z-index:20;background:var(--canvas);border-bottom:1px solid var(--hair-soft)}
+nav .in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:var(--s-xxs);padding:0 var(--s-xl);overflow-x:auto}
+nav .mark{font-family:var(--font-sans);font-weight:500;font-size:18px;line-height:1.4;color:var(--ink);margin-right:auto;white-space:nowrap;padding:16px 0}
+nav .mark .s{color:var(--primary)}
+nav a{white-space:nowrap;font-weight:500;font-size:14px;line-height:1.4;color:var(--muted);text-decoration:none;padding:18px var(--s-sm)}
+nav a:hover{color:var(--primary)}
+@media(max-width:720px){nav .in{padding:0 var(--s-lg)}}
+.hero{padding:var(--s-xxl) 0 var(--s-section);max-width:980px}
+.hero .eyebrow{margin-bottom:var(--s-lg)}
+.hero h1{margin:0 0 var(--s-lg)}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero .sub{font-size:16px;line-height:1.55;color:var(--muted);max-width:680px;margin:0 0 var(--s-xl)}
+.hero .sub b{color:var(--body-strong)}
+.hero .meta{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.hero .meta span:not(:last-child)::after{content:"／";color:var(--primary);margin:0 var(--s-sm)}
+section{padding-top:var(--s-section);max-width:1200px}
+.k{display:flex;align-items:baseline;gap:var(--s-lg);margin-bottom:var(--s-xl)}
+.k .n{font-family:var(--font-mono);font-weight:400;font-size:12px;line-height:1.4;letter-spacing:1.5px;color:var(--primary);padding-top:6px}
+.k h2{margin:0}
+.k .sub{font-family:var(--font-display);font-weight:500;font-size:22px;line-height:1.3;color:var(--muted-soft)}
+.coral-band{background:var(--primary);color:var(--on-primary);border-radius:var(--r-xl);padding:var(--s-xxl)}
+.coral-band .en{font-family:var(--font-display);font-weight:500;font-size:24px;line-height:1.3;letter-spacing:-.2px;margin:0}
+.coral-band .zh{font-size:15px;line-height:1.55;margin:var(--s-md) 0 0}
+.coral-band .from{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;margin-top:var(--s-lg);opacity:.85}
+.formula{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:var(--s-xs);margin:var(--s-xl) 0 0}
+.chip{font-size:13px;line-height:1.5;text-align:center;padding:var(--s-sm) var(--s-md);border-radius:var(--r-md);color:var(--ink)}
+.chip b{display:block;font-size:15px;font-weight:500}
+.chip .s{font-size:12px;opacity:.72;font-weight:400}
+.c-dir{background:var(--card);border:1px solid var(--hair)}
+.c-md{background:var(--ink);color:var(--on-dark)}
+.c-mat{background:var(--soft);border:1px solid var(--hair)}
+.c-eq{background:var(--primary);color:var(--on-primary)}
+.plus{color:var(--muted-soft);font-size:18px;font-weight:500}
+.mininote{font-size:14px;line-height:1.55;color:var(--muted);margin:var(--s-md) 0 0}
+.mininote b{color:var(--body-strong)}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-md);margin-top:var(--s-lg)}
+@media(max-width:900px){.trio{grid-template-columns:1fr}}
+.pcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-xl)}
+.pcard .h{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink);margin:0 0 var(--s-xs)}
+.pcard p{font-size:14px;line-height:1.55;color:var(--body);margin:0}
+.pcard .src{font-family:var(--font-mono);font-size:12px;line-height:1.4;letter-spacing:1px;color:var(--primary);margin:0 0 var(--s-sm)}
+.pcard .q{font-family:var(--font-display);font-size:16px;line-height:1.45;color:var(--ink);font-style:italic;margin:0 0 var(--s-sm)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-md);margin-top:var(--s-md)}
+@media(max-width:720px){.pair{grid-template-columns:1fr}}
+/* 五部件（结构） */
+.lvl{display:flex;gap:var(--s-md);background:var(--soft);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-sm)}
+.lvl .idx{font-family:var(--font-mono);font-size:12px;line-height:1.4;letter-spacing:1.5px;color:var(--primary);padding-top:2px;flex:none;min-width:26px}
+.lvl b{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink)}
+.lvl .t{font-size:13px;line-height:1.55;color:var(--muted)}
+/* 循环图解 */
+.goal{background:var(--strong);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-sm) var(--s-lg);text-align:center;color:var(--ink);font-weight:500;font-size:15px;max-width:560px;margin:0 auto}
+.darrow{display:block;text-align:center;color:var(--muted-soft);font-size:14px;margin:6px 0}
+.loopback{text-align:center;font-size:13px;line-height:1.55;color:var(--muted);background:var(--canvas);border:1px dashed #d3c9ba;border-radius:var(--r-lg);padding:var(--s-sm);max-width:560px;margin:var(--s-xs) auto 0}
+.loopback b{color:var(--primary)}
+/* 场景步骤 */
+.scene{display:grid;gap:var(--s-sm);margin-top:var(--s-md)}
+.scene .st{display:flex;gap:var(--s-md);background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-sm) var(--s-lg)}
+.scene .st .ic{flex:none;font-size:18px;padding-top:2px}
+.scene .st p{margin:0;font-size:14px;line-height:1.55}
+.scene .st b{color:var(--ink)}
+.darkcard{background:var(--dark);color:var(--on-dark);border-radius:var(--r-lg);padding:var(--s-lg)}
+.darkcard .dw{font-size:12px;line-height:1.4;color:var(--muted-soft);margin:var(--s-sm) var(--s-sm) var(--s-md)}
+.darkcard .dw b{color:var(--on-dark);font-weight:500}
+pre{font-family:var(--font-mono);font-size:14px;line-height:1.6;margin:0;overflow:auto}
+pre.code{color:#e3ddd0;padding:var(--s-sm)}
+pre.code .c{color:var(--on-dark-soft)}
+pre.code .y{color:var(--amber)}
+pre.code .g{color:var(--teal)}
+.eq{border-top:1px solid var(--hair)}
+.row{display:grid;grid-template-columns:190px 1fr;gap:var(--s-lg);padding:var(--s-md) var(--s-xs);border-bottom:1px solid var(--hair)}
+@media(max-width:720px){.row{grid-template-columns:1fr;gap:var(--s-xxs)}}
+.row .a{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink)}
+.row .a small{display:block;font-weight:400;font-size:13px;line-height:1.4;color:var(--muted-soft)}
+.row .b{font-size:14px;line-height:1.55;color:var(--body)}
+.row .b b{color:var(--body-strong);font-weight:500}
+ul.tips{list-style:none;padding:0;margin:var(--s-md) 0 0}
+ul.tips li{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--primary);border-radius:var(--r-md);padding:var(--s-sm) var(--s-md);margin-bottom:var(--s-xs);font-size:14px;line-height:1.55}
+ul.tips li b{color:var(--ink)}
+/* 五行速记 */
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-sm);margin-top:var(--s-md)}
+@media(max-width:720px){.quick{grid-template-columns:1fr}}
+.qk{display:flex;gap:var(--s-sm);background:var(--soft);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-sm) var(--s-md)}
+.qk .no{font-family:var(--font-mono);font-size:12px;line-height:1.4;color:var(--primary);padding-top:2px}
+.qk p{margin:0;font-size:14px;line-height:1.55}
+.qk b{color:var(--ink)}
+.sub{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 var(--s-md)}
+.sub b{color:var(--body-strong);font-weight:500}
+.pdot{display:inline-block;width:8px;height:8px;border-radius:9999px;vertical-align:1px}
+.qbar{height:6px;background:var(--hair);border-radius:var(--r-pill);overflow:hidden}
+.qbar i{display:block;height:100%;width:0;background:var(--primary);transition:.25s}
+.qstat{display:flex;justify-content:space-between;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:var(--s-sm) 0 var(--s-xxs)}
+.glayer{font-size:13px;line-height:1.4;color:var(--muted);text-align:center;margin-bottom:var(--s-xs)}
+.ghead{display:flex;align-items:center;gap:var(--s-sm);font-weight:500;font-size:16px;line-height:1.4;color:var(--ink);margin:var(--s-xl) 0 var(--s-sm)}
+.ghead .dot{width:9px;height:9px;border-radius:9999px}
+.ghead .cnt{color:var(--on-primary);border-radius:var(--r-pill);font-size:12px;line-height:1.4;padding:2px 10px;font-weight:500;letter-spacing:.5px}
+.ghead .tip{color:var(--muted-soft);font-weight:400;font-size:13px}
+.qbox{background:var(--soft);border:1px solid var(--hair-soft);border-radius:var(--r-lg);padding:var(--s-lg);margin-bottom:var(--s-md)}
+.qt{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink)}
+.qm{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted-soft);margin:var(--s-xxs) 0 var(--s-sm)}
+.opt{display:flex;gap:var(--s-sm);align-items:flex-start;border:1px solid var(--hair);background:var(--canvas);border-radius:var(--r-md);padding:var(--s-sm) var(--s-md);margin:var(--s-xs) 0;cursor:pointer;font-size:14px;line-height:1.55}
+.opt:hover{border-color:#cfc6b8}
+.opt .key{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding-top:2px}
+.opt.r{border-color:var(--success);background:rgba(93,184,114,.12)}
+.opt.r .key{color:var(--success)}
+.opt.w{border-color:var(--error);background:rgba(198,69,69,.09)}
+.opt.w .key{color:var(--error)}
+.expl{display:none;margin-top:var(--s-sm);font-size:14px;line-height:1.55;border-radius:var(--r-md);padding:var(--s-sm) var(--s-md)}
+.expl.show{display:block}
+.expl.ok{background:rgba(93,184,114,.13);color:#276b3e}
+.expl.no{background:rgba(198,69,69,.09);color:#8f2e2e}
+.result{display:none;text-align:center;background:var(--card);border:1px solid var(--hair);border-radius:var(--r-xl);padding:var(--s-xxl);margin-top:var(--s-lg)}
+.result.show{display:block}
+.result .sc{font-family:var(--font-display);font-weight:500;font-size:48px;line-height:1.1;letter-spacing:-1px;color:var(--primary);margin:0}
+.result .gd{font-weight:500;font-size:18px;line-height:1.4;color:var(--ink);margin:var(--s-xs) 0 var(--s-xxs)}
+.result .ms{font-size:14px;line-height:1.55;color:var(--muted)}
+.rtiers{margin:var(--s-lg) auto 0;max-width:420px;text-align:left}
+.rt{display:flex;align-items:center;gap:var(--s-sm);font-size:13px;line-height:1.4;margin-bottom:var(--s-xs)}
+.rt .nm{font-weight:500;width:92px;color:var(--ink)}
+.rt .bar{flex:1;height:6px;background:var(--hair);border-radius:var(--r-pill);overflow:hidden}
+.rt .bar i{display:block;height:100%}
+.rt .nu{font-family:var(--font-mono);font-size:12px;color:var(--muted);width:46px;text-align:right}
+.btn{border:none;background:var(--primary);color:var(--on-primary);border-radius:var(--r-md);padding:12px 20px;height:40px;font-weight:500;font-size:14px;line-height:1;cursor:pointer;font-family:var(--font-sans)}
+.btn:hover{background:var(--primary-active)}
+.wl{font-size:13px;line-height:1.4;color:var(--error);margin-top:var(--s-sm)}
+footer{background:var(--dark);margin-top:var(--s-section)}
+footer .in{max-width:1200px;margin:0 auto;padding:var(--s-xxl) var(--s-xl) var(--s-xxl)}
+footer .lab{font-weight:500;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--on-dark)}
+footer p{font-size:13px;line-height:1.55;color:var(--on-dark-soft);margin:var(--s-sm) 0 0}
+footer a{color:var(--primary);text-decoration:none}
+footer a:hover{color:#e0a288}
+@media(max-width:720px){footer .in{padding:var(--s-xxl) var(--s-lg)}}
+</style>
+</head>
+<body>
+
+<nav><div class="in">
+  <span class="mark">Agent <span class="s">&</span> 速学</span>
+  <a href="#what">是什么</a><a href="#defs">权威口径</a><a href="#why">比方</a><a href="#parts">组成</a><a href="#loop">原理</a><a href="#scene">场景</a><a href="#edge">边界</a><a href="#code">最小示例</a><a href="#five">速记</a><a href="#quiz">自测</a>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">AI Agent · 概念速学 · 核对 2026-09-03</div>
+    <h1 class="display-xl">自己决定怎么做的 AI，<br>才叫 <em>Agent</em></h1>
+    <p class="sub">一句话：Agent 是<b>对着一个目标，自己拆步骤、调工具、看结果，直到把事办成</b>的 AI 系统——不是只会“你问我答”的聊天机器人。差在一点：<b>自主决策 + 行动闭环</b>。</p>
+    <div class="meta"><span>约 3 分钟读完</span><span>图解</span><span>12 题分层自测</span><span>来源见页脚</span></div>
+  </header>
+
+  <!-- 01 是什么 -->
+  <section id="what">
+    <div class="k"><span class="n">01</span><h2 class="display-md">是什么</h2></div>
+    <div class="coral-band">
+      <p class="en">“Agents are systems where models dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks.”</p>
+      <p class="zh">翻译：Agent 里，模型自己指挥“下一步做什么、用什么工具、怎么完成”，而不是由写死的代码决定。</p>
+      <div class="from">Source · Anthropic《Building Effective Agents》</div>
+    </div>
+    <div class="formula">
+      <div class="chip c-md">🧠 LLM<b>大脑</b><span class="s">理解与推理</span></div>
+      <span class="plus">＋</span>
+      <div class="chip c-dir">🗺️ 规划<b>拆步骤</b></div>
+      <span class="plus">＋</span>
+      <div class="chip c-mat">📝 记忆<b>记事本</b></div>
+      <span class="plus">＋</span>
+      <div class="chip c-dir">🛠️ 工具<b>手脚</b></div>
+      <span class="plus">＝</span>
+      <div class="chip c-eq">🤖 Agent<b>能办成事的系统</b></div>
+    </div>
+    <p class="mininote">经典配方出自 Lilian Weng《LLM Powered Autonomous Agents》：<b>LLM ＋ Planning ＋ Memory ＋ Tools</b>。工程上还常补一个<b>护栏（Guardrails）</b>。</p>
+  </section>
+
+  <!-- 02 权威口径 -->
+  <section id="defs">
+    <div class="k"><span class="n">02</span><h2 class="display-md">三种权威口径</h2><span class="sub">说法不同，内核一致</span></div>
+    <div class="trio">
+      <div class="pcard">
+        <p class="src">Anthropic · 2025</p>
+        <p class="q">“Agent 让模型动态指挥自身进程与工具使用。”</p>
+        <p>在更宽的“Agentic Systems（智能体系统）”伞下，严格区分 Workflow 与 Agent——关键看<b>路径由代码定，还是由模型定</b>。</p>
+      </div>
+      <div class="pcard">
+        <p class="src">ISO 定义 · 经 WEF 白皮书引用</p>
+        <p class="q">“Agent 是使用传感器感知环境、通过效应器响应的实体，具有自主性与权限。”</p>
+        <p>源自世界经济论坛《驾驭人工智能前沿》白皮书。强调两件事：<b>感知环境 + 有授权地行动</b>。</p>
+      </div>
+      <div class="pcard">
+        <p class="src">新加坡 GovTech · 2025</p>
+        <p class="q">“Agent 是目标导向、能独立思考与行动的实体。”</p>
+        <p>内部是一个持续循环：<b>Observing（观察）→ Reasoning（推理）→ Acting（行动）→ Learning（学习）</b>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 比方 -->
+  <section id="why">
+    <div class="k"><span class="n">03</span><h2 class="display-md">打个比方</h2></div>
+    <div class="pair">
+      <div class="pcard"><p class="h">🧑‍💼 顾问 vs 实习生</p><p>聊天机器人＝顾问：问一句答一句。Agent＝实习生：交代一件完整的事，他会自己拆任务、查资料、缺数据会补查，最后交付成果。</p></div>
+      <div class="pcard"><p class="h">🕵️ 像侦探查案</p><p>拿到委托 → 收集线索（调工具）→ 推理 → 发现不够 → 再查 → 结案。不是一次想通的，而是“试一步、看一步、再试”。</p></div>
+    </div>
+  </section>
+
+  <!-- 04 组成 -->
+  <section id="parts">
+    <div class="k"><span class="n">04</span><h2 class="display-md">解剖：五个部件</h2></div>
+    <div class="lvl"><span class="idx">01</span><div><b>🧠 大脑 · LLM</b><br><span class="t">理解指令、推理决策。只靠它＝聊天机器人。</span></div></div>
+    <div class="lvl"><span class="idx">02</span><div><b>🗺️ 规划 · Planning</b><br><span class="t">把大目标拆成步骤；常见三种：单步决策 / 先规划后执行 / 动态再规划。</span></div></div>
+    <div class="lvl"><span class="idx">03</span><div><b>📝 记忆 · Memory</b><br><span class="t">工作记忆（本次任务草稿）、短期记忆（本会话）、长期记忆（跨次运行，多放向量库）。</span></div></div>
+    <div class="lvl"><span class="idx">04</span><div><b>🛠️ 工具 · Tools</b><br><span class="t">查库、搜网页、发邮件、执行代码……让 Agent“碰到真实世界”。接入方式常见 Function Calling 与 MCP。</span></div></div>
+    <div class="lvl"><span class="idx">05</span><div><b>🛡️ 护栏 · Guardrails</b><br><span class="t">最大步数、预算上限、工具白名单、敏感操作需人工审批——防止乱来。</span></div></div>
+  </section>
+
+  <!-- 05 原理 -->
+  <section id="loop">
+    <div class="k"><span class="n">05</span><h2 class="display-md">核心机制：Agent 循环</h2></div>
+    <p class="mininote" style="margin-top:0">几乎所有 Agent 跑的都是同一个循环，叫 <b>ReAct（Reason ＋ Act）</b>：</p>
+    <div style="margin-top:var(--s-md)">
+      <div class="goal">🎯 拿到目标</div>
+      <span class="darrow">↓</span>
+      <div class="lvl"><span class="idx">A</span><div><b>思考 Reason</b><br><span class="t">LLM 决定：下一步调哪个工具，还是直接回答？</span></div></div>
+      <span class="darrow">↓</span>
+      <div class="lvl"><span class="idx">B</span><div><b>行动 Act</b><br><span class="t">系统真的去执行工具调用（查数据库、发请求、跑代码）。</span></div></div>
+      <span class="darrow">↓</span>
+      <div class="lvl"><span class="idx">C</span><div><b>观察 Observe</b><br><span class="t">把工具返回的“真实数据”拿回来，喂回给大脑评估进度。</span></div></div>
+      <div class="loopback">↺ <b>回到 A</b>，直到完成目标，或触发护栏上限（步数 / 超时 / 预算）</div>
+    </div>
+    <p class="mininote">关键在“闭环 + 真实反馈”：答错能重来、缺数据会补查。<b>每一步都用环境返回的真实结果评估</b>——这是 Agent 与普通程序最本质的差别。</p>
+  </section>
+
+  <!-- 06 场景 -->
+  <section id="scene">
+    <div class="k"><span class="n">06</span><h2 class="display-md">一个具体场景</h2><span class="sub">数据分析 Agent</span></div>
+    <div class="scene">
+      <div class="st"><span class="ic">1️⃣</span><p><b>接目标</b>：“分析订单表，找出 7 月销量最高的 SKU，出一份报告”。</p></div>
+      <div class="st"><span class="ic">2️⃣</span><p><b>探查数据</b>：读取 CSV，发现两列有缺失值、日期格式不一致。</p></div>
+      <div class="st"><span class="ic">3️⃣</span><p><b>动态决策</b>：写脚本清洗与补全 → 跑 SQL 聚合 → 发现疑似脏数据，回头修正口径再查。</p></div>
+      <div class="st"><span class="ic">4️⃣</span><p><b>护栏介入</b>：只读权限、限定执行时长、禁止删表；对外发送报告前需人工确认。</p></div>
+      <div class="st"><span class="ic">5️⃣</span><p><b>留痕闭环</b>：每步操作与结果都记录，最后汇报结论与依据。</p></div>
+    </div>
+    <p class="mininote">为什么不用固定脚本？因为数据状况不可预测——有缺失、有脏值、要反复查证。<b>Agent 能边做边调整</b>；但也因此更贵、更难预测，必须配护栏。</p>
+  </section>
+
+  <!-- 07 边界 -->
+  <section id="edge">
+    <div class="k"><span class="n">07</span><h2 class="display-md">别混淆</h2><span class="sub">边界在哪</span></div>
+    <div class="eq">
+      <div class="row"><div class="a">💬 聊天机器人<small>Chatbot</small></div><div class="b">答完即停。<b>Agent 多一个“行动→观察”闭环</b>，能真正办成事。</div></div>
+      <div class="row"><div class="a">🛤️ 工作流<small>Workflow</small></div><div class="b">路径写死，同样输入必得同样输出。Anthropic 建议：<b>能不用 Agent 就不用</b>，固定步骤先上 Workflow——更便宜、更可靠。</div></div>
+      <div class="row"><div class="a">📦 大模型<small>LLM</small></div><div class="b">LLM 是“语言脑”，只理解与生成；Agent 是把它<b>装进感知—决策—行动的壳里</b>去完成任务。不是同一层。</div></div>
+      <div class="row"><div class="a">🔌 MCP / Skill<small>协议与技能包</small></div><div class="b">它们是 Agent 的<b>零件</b>（MCP 管“怎么接工具”、Skill 管“怎么做某事”）；Agent 是<b>组装并指挥零件干活</b>的系统。不是同一层。</div></div>
+      <div class="row"><div class="a">⚖️ 自主度</div><div class="b">“自主”不等于“无人看管”。给自主分级，<b>高成本 / 敏感操作保留人工审批</b>（业界常拿自动驾驶 L1–L5 类比自主程度）。</div></div>
+      <div class="row"><div class="a">🧨 安全雷区</div><div class="b">同时具备“私有数据 + 接触不可信内容 + 对外通信”＝提示注入高发组合（Simon Willison：The Lethal Trifecta）。</div></div>
+    </div>
+    <ul class="tips">
+      <li><b>使用边界一句话</b>：先问“路径是固定的吗？”是 → Workflow；需要自行决策、查证、适应变化 → 再考虑 Agent。</li>
+    </ul>
+  </section>
+
+  <!-- 08 最小示例 -->
+  <section id="code">
+    <div class="k"><span class="n">08</span><h2 class="display-md">最小示例</h2><span class="sub">一段伪代码看懂循环</span>
+    <div class="darkcard">
+      <p class="dw">一个最小 Agent 的骨架（伪代码）</p>
+      <pre class="code"><span class="c">def agent(目标, tools, 最大步数=25):</span>
+    <span class="y">历史</span> = [目标]                    <span class="c"># 记忆：先装目标</span>
+    <span class="g">for</span> i <span class="g">in range</span>(最大步数):      <span class="c"># 护栏：限制循环次数</span>
+        <span class="y">想法</span> = llm(历史, tools)          <span class="c"># 大脑：想下一步（思考）</span>
+        <span class="g">if</span> 想法.完成: <span class="g">return</span> 想法.答案
+        <span class="y">结果</span> = 执行(想法.要调的工具)      <span class="c"># 手脚：真正去调工具（行动）</span>
+        <span class="y">历史</span> += [结果]                    <span class="c"># 把真实反馈喂回去，继续循环</span></pre>
+    </div>
+  </section>
+
+  <!-- 09 五行速记 -->
+  <section id="five">
+    <div class="k"><span class="n">09</span><h2 class="display-md">五行速记</h2></div>
+    <div class="quick">
+      <div class="qk"><span class="no">01</span><p><b>Agent ≠ 会聊天的模型</b>，而是“能自己决定并办成事”的系统。</p></div>
+      <div class="qk"><span class="no">02</span><p>一句话流程：<b>目标 → 拆步骤 → 调工具 → 看真实结果 → 循环</b>。</p></div>
+      <div class="qk"><span class="no">03</span><p>五个部件：<b>LLM 大脑 · 规划 · 记忆 · 工具 · 护栏</b>，缺护栏最危险。</p></div>
+      <div class="qk"><span class="no">04</span><p>固定路径用 <b>Workflow</b>，开放、要自适应才上 <b>Agent</b>。</p></div>
+      <div class="qk"><span class="no">05</span><p><b>私有数据＋不可信内容＋对外通信</b>＝提示注入雷区。</p></div>
+    </div>
+  </section>
+
+  <!-- 10 自测 -->
+  <section id="quiz">
+    <div class="k"><span class="n">10</span><h2 class="display-md">自测</h2><span class="sub">12 题 · 分 3 层</span></div>
+    <p class="sub"><span class="pdot" style="background:#5db872"></span> 入门（基础）→ <span class="pdot" style="background:#d4a017"></span> 进阶（原理）→ <span class="pdot" style="background:#c64545"></span> 挑战（细节辨析）。选完即判对错。<b>达标线：入门 4/4 ＋ 进阶 ≥3 ＋ 挑战 ≥2</b></p>
+    <div class="qbar"><i id="qbarFill"></i></div>
+    <div class="qstat"><span id="qDone">已答 0 / 12</span><span id="qScore">答对 0 题</span></div>
+    <div class="glayer" id="lpill"></div>
+    <div id="quizRoot"></div>
+
+    <div class="result" id="resultBox">
+      <p class="sc" id="resScore"></p>
+      <div class="gd" id="resGrade"></div>
+      <div class="ms" id="resMsg"></div>
+      <div class="rtiers" id="resTiers"></div>
+      <div class="wl" id="resWrong"></div>
+      <div style="margin-top:var(--s-md)"><button class="btn" onclick="restartQuiz()">↻ 再来一次</button></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="in">
+    <div class="lab">可核查来源 · 内容核对于 2026-09-03</div>
+    <p>· Anthropic《Building effective agents》：<a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a><br>
+    · 世界经济论坛《驾驭人工智能前沿：AI Agent 的发展与影响》（含 ISO 定义）：<a href="https://chinawto.mofcom.gov.cn/article/ap/p/202501/20250103560919.shtml">chinawto.mofcom.gov.cn/article/ap/p/202501/20250103560919.shtml</a><br>
+    · 新加坡 GovTech《AI agents explained》：<a href="https://www.tech.gov.sg/technews/ai-agents">tech.gov.sg/technews/ai-agents</a><br>
+    · Lilian Weng（OpenAI）《LLM Powered Autonomous Agents》：<a href="https://lilianweng.github.io/posts/2023-06-23-agent/">lilianweng.github.io/posts/2023-06-23-agent/</a><br>
+    · ReAct 论文（Reason＋Act）：<a href="https://arxiv.org/abs/2210.03629">arxiv.org/abs/2210.03629</a><br>
+    · Simon Willison《The Lethal Trifecta for AI Agents》：<a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">simonwillison.net/2025/Jun/16/the-lethal-trifecta/</a></p>
+    <p style="opacity:.72">页面由 concept-microcourse 技能生成，视觉采用 Anthropic/Claude 设计 token。</p>
+  </div>
+</footer>
+
+<script>
+/* 测验引擎：三层难度（复用 concept-microcourse 技能 quiz-engine） */
+const LAYERS=[
+  {name:'入门',color:'#5db872'},
+  {name:'进阶',color:'#d4a017'},
+  {name:'挑战',color:'#c64545'}
+];
+const Q=[
+ /* 第一层 · 入门 */
+ {L:0,q:'Agent 与聊天机器人最根本的区别是？',o:['Agent 有“行动→观察”闭环，能调工具把事办成','Agent 说话更快','Agent 模型更大','Agent 必须联网'],
+  a:0,e:'聊天机器人答完即止；Agent 会调工具、看结果、继续推进直到完成。'},
+ {L:0,q:'最经典的 Agent 配方是？',o:['LLM ＋ 规划 ＋ 记忆 ＋ 工具','LLM ＋ 更多训练数据','提示词 ＋ 数据库 ＋ 网页','脚本 ＋ 按钮 ＋ 定时任务'],
+  a:0,e:'出自 Lilian Weng 的经典文章：Agent = LLM + Planning + Memory + Tools。'},
+ {L:0,q:'Agent 的“大脑”指什么？',o:['大语言模型（LLM），负责理解与推理','存放记忆的数据库','能调用的 API 列表','执行动作的操作系统'],
+  a:0,e:'LLM 负责“想”；规划、记忆、工具是让它能干活的外挂。'},
+ {L:0,q:'Agent 靠什么影响真实世界（而不只是说话）？',o:['调用工具：查库、搜网、发邮件、执行代码','把提示词写得更长','记住更多对话','用更大的模型'],
+  a:0,e:'工具（ISO 语境下叫“效应器”）是 Agent 的“手脚”，把决策真正执行出去。'},
+ /* 第二层 · 进阶 */
+ {L:1,q:'ReAct 循环的正确顺序是？',o:['行动→观察→思考','思考→行动→观察，再回到思考','观察→思考→结束','一次推理直接完成'],
+  a:1,e:'ReAct = Reason + Act：每轮想一步、做一步、看结果，循环到完成。'},
+ {L:1,q:'按常见分法，Agent 记忆分哪几类？',o:['工作记忆、短期记忆、长期记忆','只分硬盘和内存','对话和文件两类','提示词和参数两类'],
+  a:0,e:'工作记忆管本次任务进度，短期管本会话，长期跨运行（常放向量库）。'},
+ {L:1,q:'下列哪项最能防止 Agent 死循环烧钱？',o:['护栏：步数上限、超时、预算上限','把系统提示词写得更长','换更快的模型','扩大上下文窗口'],
+  a:0,e:'护栏给循环设硬边界；没有它，Agent 遇错可能无限重试。'},
+ {L:1,q:'新加坡 GovTech 把 Agent 的内部过程概括为哪四个动作？',o:['观察→推理→行动→学习','编译→运行→报错→修复','提问→回答→打分→结束','抓取→存储→显示→删除'],
+  a:0,e:'GovTech：Observing → Reasoning → Acting → Learning，一个持续循环。'},
+ /* 第三层 · 挑战 */
+ {L:2,q:'Workflow 与 Agent 的关键区别是？',o:['Workflow 路径写死；Agent 由模型动态自主指挥','Workflow 不用 LLM','Agent 不需要工具','Workflow 不能处理文本'],
+  a:0,e:'Anthropic 定义：Workflow 走预定义代码路径；Agent 由模型动态决定进程与工具。'},
+ {L:2,q:'按 Anthropic 建议，什么情况才值得上 Agent？',o:['任何任务都该用 Agent','路径固定就先上 Workflow，开放/不确定任务才用 Agent','只有长文本任务用 Agent','只有聊天才用 Agent'],
+  a:1,e:'官方原话：能不用 Agent 就不用。固定步骤用 Workflow 更便宜可靠。'},
+ {L:2,q:'世界经济论坛引用的 ISO 定义中，AI Agent 被描述为？',o:['使用传感器感知环境、通过效应器响应，具有自主性与权限的实体','只会生成文字的模型','一种数据库管理系统','一种编程语言'],
+  a:0,e:'ISO：用传感器感知、用效应器行动——强调感知与有授权地改变环境。'},
+ {L:2,q:'关于 Agent 与 MCP / Skill 的关系，正确的是？',o:['它们是同一层概念，可互换','MCP / Skill 是零件，Agent 是组装并指挥它们的系统','装了 MCP 就不能有 Agent','Skill 只能给聊天用'],
+  a:1,e:'MCP 管“怎么接工具”，Skill 管“怎么做某事”，Agent 是组织者——分层不同。'}
+];
+const LCNT=[4,4,4];
+const TOTAL=12;
+const heads=['基础 · 先懂“是什么”，需全对','原理与实战 · 循环与护栏','细节辨析 · 边界与权威定义'];
+let answered=0,correct=0,layerA=[0,0,0],layerC=[0,0,0];
+const letters=['A','B','C','D'];
+function paint(){
+  document.getElementById('qbarFill').style.width=(answered/TOTAL*100)+'%';
+  document.getElementById('qDone').textContent='已答 '+answered+' / '+TOTAL;
+  document.getElementById('qScore').textContent='答对 '+correct+' 题';
+  document.getElementById('lpill').innerHTML=LAYERS.map((l,i)=>
+    '<span style="color:'+l.color+'">● '+l.name+' '+layerA[i]+'/'+LCNT[i]+'</span>').join('　');
+}
+function render(){
+  const root=document.getElementById('quizRoot');
+  root.innerHTML='';let g=0;
+  LAYERS.forEach((ly,l)=>{
+    const items=Q.filter(q=>q.L===l); if(!items.length)return;
+    const h=document.createElement('div');h.className='ghead';
+    h.innerHTML='<span class="dot" style="background:'+ly.color+'"></span>'+ly.name+
+      '<span class="cnt" style="background:'+ly.color+'">'+LCNT[l]+' 题</span><span class="tip">'+heads[l]+'</span>';
+    root.appendChild(h);
+    items.forEach(it=>{
+      g++;
+      const box=document.createElement('div');box.className='qbox';
+      box.innerHTML='<div class="qt">'+g+'. '+it.q+'</div><div class="qm">'+ly.name+' · 单选 · '+g+'/'+TOTAL+'</div>'+
+        it.o.map((op,i)=>'<div class="opt" data-i="'+i+'"><span class="key">'+letters[i]+'</span><span>'+op+'</span></div>').join('')+
+        '<div class="expl"></div>';
+      root.appendChild(box);
+      box.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+        if(box.dataset.done)return;
+        box.dataset.done='1';
+        const pick=+el.dataset.i;answered++;layerA[l]++;
+        const right=pick===it.a;
+        if(right){correct++;layerC[l]++;el.classList.add('r');}
+        else{el.classList.add('w');box.querySelectorAll('.opt')[it.a].classList.add('r');}
+        box.querySelectorAll('.opt').forEach(x=>{if(x!==el&&!(right&&x===el))x.style.opacity=.45;});
+        const ex=box.querySelector('.expl');
+        ex.classList.add('show',right?'ok':'no');
+        ex.innerHTML=(right?'✓ 对':'✗ 答案是 '+letters[it.a])+'：'+it.e;
+        paint();if(answered===TOTAL)showResult();
+      });
+    });
+  });
+}
+function showResult(){
+  const box=document.getElementById('resultBox');box.classList.add('show');
+  document.getElementById('resScore').textContent=correct+' / '+TOTAL;
+  document.getElementById('resTiers').innerHTML=LAYERS.map((l,i)=>
+    '<div class="rt"><span class="nm" style="color:'+l.color+'">'+l.name+'</span>'+
+    '<span class="bar"><i style="width:'+(layerC[i]/LCNT[i]*100)+'%;background:'+l.color+'"></i></span>'+
+    '<span class="nu">'+layerC[i]+' / '+LCNT[i]+'</span></div>').join('');
+  const eOk=layerC[0]===LCNT[0],mOk=layerC[1]>=3,hOk=layerC[2]>=2;
+  let gd,ms;
+  if(correct===TOTAL){gd='满分';ms='三层全通。可以试着写一个最小 Agent 了。';}
+  else if(eOk&&mOk&&hOk){gd='达标通关';ms='基础、原理、边界都过关。';}
+  else if(!eOk){gd='先补基础';ms='入门应 4/4：回到「是什么 / 权威口径 / 打个比方」。';}
+  else if(!mOk){gd='进阶层没过';ms='重点复习「核心机制：Agent 循环」。';}
+  else{gd='差在细节';ms='重点看「边界：别混淆」与权威定义。';}
+  document.getElementById('resGrade').textContent=gd;
+  document.getElementById('resMsg').textContent=ms;
+  const wrong=[];
+  document.querySelectorAll('.qbox').forEach((b,i)=>{if(b.querySelector('.opt.w'))wrong.push(i+1);});
+  document.getElementById('resWrong').textContent=wrong.length?'待复习：第 '+wrong.join('、')+' 题':'';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function restartQuiz(){
+  answered=0;correct=0;layerA.fill(0);layerC.fill(0);
+  document.getElementById('resultBox').classList.remove('show');
+  paint();render();
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+}
+render();paint();
+</script>
+</body>
+</html>
