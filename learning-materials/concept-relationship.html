@@ -89,13 +89,70 @@ footer p{font-size:13px;line-height:1.55;color:var(--on-dark-soft);margin:var(--
 footer a{color:var(--primary);text-decoration:none}
 footer a:hover{color:#e0a288}
 @media(max-width:720px){footer .in{padding:var(--s-xxl) var(--s-lg)}}
+/* 自测区（复用 concept-microcourse 技能 quiz-engine） */
+.sub{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 var(--s-md)}
+.sub b{color:var(--body-strong);font-weight:500}
+.pdot{display:inline-block;width:8px;height:8px;border-radius:9999px;vertical-align:1px}
+.qbar{height:6px;background:var(--hair);border-radius:var(--r-pill);overflow:hidden}
+.qbar i{display:block;height:100%;width:0;background:var(--primary);transition:.25s}
+.qstat{display:flex;justify-content:space-between;font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:var(--s-sm) 0 var(--s-xxs)}
+.glayer{font-size:13px;line-height:1.4;color:var(--muted);text-align:center;margin-bottom:var(--s-xs)}
+.ghead{display:flex;align-items:center;gap:var(--s-sm);font-weight:500;font-size:16px;line-height:1.4;color:var(--ink);margin:var(--s-xl) 0 var(--s-sm)}
+.ghead .dot{width:9px;height:9px;border-radius:9999px}
+.ghead .cnt{color:var(--on-primary);border-radius:var(--r-pill);font-size:12px;line-height:1.4;padding:2px 10px;font-weight:500;letter-spacing:.5px}
+.ghead .tip{color:var(--muted-soft);font-weight:400;font-size:13px}
+.qbox{background:var(--soft);border:1px solid var(--hair-soft);border-radius:var(--r-lg);padding:var(--s-lg);margin-bottom:var(--s-md)}
+.qt{font-weight:500;font-size:16px;line-height:1.4;color:var(--ink)}
+.qm{font-size:12px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted-soft);margin:var(--s-xxs) 0 var(--s-sm)}
+.opt{display:flex;gap:var(--s-sm);align-items:flex-start;border:1px solid var(--hair);background:var(--canvas);border-radius:var(--r-md);padding:var(--s-sm) var(--s-md);margin:var(--s-xs) 0;cursor:pointer;font-size:14px;line-height:1.55}
+.opt:hover{border-color:#cfc6b8}
+.opt .key{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding-top:2px}
+.opt.r{border-color:var(--success);background:rgba(93,184,114,.12)}
+.opt.r .key{color:var(--success)}
+.opt.w{border-color:var(--error);background:rgba(198,69,69,.09)}
+.opt.w .key{color:var(--error)}
+.expl{display:none;margin-top:var(--s-sm);font-size:14px;line-height:1.55;border-radius:var(--r-md);padding:var(--s-sm) var(--s-md)}
+.expl.show{display:block}
+.expl.ok{background:rgba(93,184,114,.13);color:#276b3e}
+.expl.no{background:rgba(198,69,69,.09);color:#8f2e2e}
+.result{display:none;text-align:center;background:var(--card);border:1px solid var(--hair);border-radius:var(--r-xl);padding:var(--s-xxl);margin-top:var(--s-lg)}
+.result.show{display:block}
+.result .sc{font-family:var(--font-display);font-weight:500;font-size:48px;line-height:1.1;letter-spacing:-1px;color:var(--primary);margin:0}
+.result .gd{font-weight:500;font-size:18px;line-height:1.4;color:var(--ink);margin:var(--s-xs) 0 var(--s-xxs)}
+.result .ms{font-size:14px;line-height:1.55;color:var(--muted)}
+.rtiers{margin:var(--s-lg) auto 0;max-width:420px;text-align:left}
+.rt{display:flex;align-items:center;gap:var(--s-sm);font-size:13px;line-height:1.4;margin-bottom:var(--s-xs)}
+.rt .nm{font-weight:500;width:92px;color:var(--ink)}
+.rt .bar{flex:1;height:6px;background:var(--hair);border-radius:var(--r-pill);overflow:hidden}
+.rt .bar i{display:block;height:100%}
+.rt .nu{font-family:var(--font-mono);font-size:12px;color:var(--muted);width:46px;text-align:right}
+.btn{border:none;background:var(--primary);color:var(--on-primary);border-radius:var(--r-md);padding:12px 20px;height:40px;font-weight:500;font-size:14px;line-height:1;cursor:pointer;font-family:var(--font-sans)}
+.btn:hover{background:var(--primary-active)}
+.wl{font-size:13px;line-height:1.4;color:var(--error);margin-top:var(--s-sm)}
+/* 文献资料 */
+.refs{display:grid;gap:var(--s-md)}
+.refcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-lg)}
+.refcard h3{margin:0 0 var(--s-sm);font-size:14px;font-weight:500;color:var(--ink);display:flex;align-items:center;gap:var(--s-xs);flex-wrap:wrap}
+.refcard h3 .tag{font-size:12px;font-weight:500;color:var(--body);background:var(--soft);border:1px solid var(--hair);border-radius:var(--r-pill);padding:2px 9px}
+.refcard ol{margin:0;padding-left:1.5em}
+.refcard li{font-size:13px;line-height:1.65;color:var(--body);margin-bottom:10px}
+.refcard li:last-child{margin-bottom:0}
+.refcard li b{color:var(--ink);font-weight:500}
+.refcard li a{color:var(--primary);text-decoration:none;word-break:break-all}
+.refcard li a:hover{text-decoration:underline}
+.refcard li .src{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.refnote{font-size:12px;line-height:1.6;color:var(--muted);border-left:3px solid var(--primary);background:var(--soft);border-radius:0 var(--r-md) var(--r-md) 0;padding:var(--s-sm) var(--s-md);margin:var(--s-md) 0 0}
+
+.figimg{margin:var(--s-md) 0 0;padding:var(--s-md);background:var(--canvas);border:1px solid var(--hair);border-radius:var(--r-lg)}
+.figimg img{display:block;width:100%;max-width:820px;margin:0 auto;height:auto}
+.figimg figcaption{font-size:12px;line-height:1.5;color:var(--muted-soft);text-align:center;margin-top:var(--s-sm)}
 </style>
 </head>
 <body>
 
 <nav><div class="in">
   <span class="mark">Agent · Context <span class="s">&</span> Skill</span>
-  <a href="#three">三问</a><a href="#fig">关系图</a><a href="#tab">一览表</a><a href="#keys">两条主线</a><a href="#demo">真实链路</a><a href="#ask">思考题</a>
+  <a href="#three">三问</a><a href="#fig">关系图</a><a href="#tab">一览表</a><a href="#keys">两条主线</a><a href="#demo">真实链路</a><a href="#quiz">自测</a>
 </div></nav>
 
 <div class="wrap">
@@ -135,6 +192,11 @@ footer a:hover{color:#e0a288}
       <div class="goal">👀 观察结果回填上下文，再决定下一步<br><span class="sub">直到完成；完成后的新经验又可写回 Skill，供下次复用</span></div>
     </div>
     <p class="mininote">注意两处双向性：<b>上下文决定 Agent 能“想”得多好</b>；<b>Agent 反过来决定把什么塞进上下文</b>（检索哪些、开哪个 Skill、要不要压缩）——这就是为什么 Anthropic 说“上下文工程是 Agent 时代提示工程的进化”。</p>
+  
+    <figure class="figimg">
+      <img src="assets/concept-map.svg" alt="Agent 上下文 Skill 的咬合关系" loading="lazy">
+      <figcaption>图 1 · 三者咬合：Agent 决定放什么，上下文决定想得多好，Skill 决定能不能一次做对</figcaption>
+    </figure>
   </section>
 
   <!-- 03 一览表 -->
@@ -171,27 +233,173 @@ footer a:hover{color:#e0a288}
     </ul>
   </section>
 
-  <!-- 06 思考题 -->
-  <section id="ask">
-    <div class="k"><span class="n">06</span><h2 class="display-md">自己想一想</h2></div>
-    <ul class="tips">
-      <li><span class="q">思考题 1</span><b>装 5 万字噪音进上下文，Agent 会怎样？</b> 结合 U 型效应与上下文腐烂解释：噪音会挤占注意力预算，让系统提示或关键事实“沉底”，Agent 表现下降——问题不在模型，在上下文设计。</li>
-      <li><span class="q">思考题 2</span><b>设计规范写进系统提示 vs 写进 SKILL.md，差别在哪？</b> 前者每会话固定占用窗口（长期成本）；后者平时只占一行简介，命中才读正文——同样的知识，一个“常驻占位”，一个“按需取用”。</li>
-      <li><span class="q">思考题 3</span><b>假如要沉淀一个“周报 Agent”，SKILL.md 的 name 和 description 你写什么？</b> 提示：description 要写清“何时该用、不该用”，例如“仅当用户要求按公司模板生成周报时使用，别用于日报”。</li>
-    </ul>
+  <!-- 06 自测 -->
+  <section id="quiz">
+    <div class="k"><span class="n">06</span><h2 class="display-md">自测</h2><span class="sub">12 题 · 分 3 层</span></div>
+    <p class="sub"><span class="pdot" style="background:#5db872"></span> 入门（基础）→ <span class="pdot" style="background:#d4a017"></span> 进阶（原理）→ <span class="pdot" style="background:#c64545"></span> 挑战（细节辨析）。选完即判对错。<b>达标线：入门 4/4 ＋ 进阶 ≥3 ＋ 挑战 ≥2</b></p>
+    <div class="qbar"><i id="qbarFill"></i></div>
+    <div class="qstat"><span id="qDone">已答 0 / 12</span><span id="qScore">答对 0 题</span></div>
+    <div class="glayer" id="lpill"></div>
+    <div id="quizRoot"></div>
+
+    <div class="result" id="resultBox">
+      <p class="sc" id="resScore"></p>
+      <div class="gd" id="resGrade"></div>
+      <div class="ms" id="resMsg"></div>
+      <div class="rtiers" id="resTiers"></div>
+      <div class="wl" id="resWrong"></div>
+      <div style="margin-top:var(--s-md)"><button class="btn" onclick="restartQuiz()">↻ 再来一次</button></div>
+    </div>
+  </section>
+
+
+  <!-- 07 文献资料 -->
+  <section id="refs">
+    <div class="k"><span class="n">07</span><h2 class="display-md">文献资料</h2><span class="sub">官方文档 ＋ 学术论文 · 逐条核对</span></div>
+    <p class="sub">本页是三者关系的汇总页，文献按「Agent / 上下文 / Skill」三块精选<b>一手来源</b>并列，便于一次性核对。</p>
+    <div class="refs">
+      <div class="refcard">
+        <h3>官方文档与规范<span class="tag">一手</span></h3>
+        <ol>
+        <li><b>Building Effective AI Agents</b> — Anthropic Engineering，2024-12-19。Agent 与 workflow 的分界。<br><a href="https://www.anthropic.com/engineering/building-effective-agents">www.anthropic.com/engineering/building-effective-agents</a></li>
+        <li><b>Effective context engineering for AI agents</b> — Anthropic Engineering，2025-09-29。上下文腐化、注意力预算、即时检索。<br><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</a></li>
+        <li><b>Equipping agents for the real world with Agent Skills</b> — Anthropic Engineering，2025-10-16。渐进式披露机制。<br><a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></li>
+        <li><b>Agent Skills 开放标准主页</b> — Agent Skills 官方站点。SKILL.md 格式定义。<br><a href="https://agentskills.io/">agentskills.io/</a></li>
+        <li><b>Building agents（官方指南）</b> — OpenAI 开发者文档。Agent 定义与三要素。<br><a href="https://developers.openai.com/tracks/building-agents">developers.openai.com/tracks/building-agents</a></li>
+        <li><b>Model Context Protocol 官方规范</b> — MCP 官方站点。工具接入的开放标准。<br><a href="https://modelcontextprotocol.io/">modelcontextprotocol.io/</a></li>
+        </ol>
+      </div>
+      <div class="refcard">
+        <h3>学术论文<span class="tag">一手 · arXiv 可查</span></h3>
+        <ol>
+        <li><b>ReAct: Synergizing Reasoning and Acting in Language Models</b> — Shunyu Yao 等，2022-10-06，arXiv:2210.03629。Agent 决策循环出处。<br><a href="https://arxiv.org/abs/2210.03629">arxiv.org/abs/2210.03629</a></li>
+        <li><b>Lost in the Middle: How Language Models Use Long Contexts</b> — Nelson F. Liu 等，2023-07-06，arXiv:2307.03172。上下文位置效应。<br><a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a></li>
+        <li><b>Voyager: An Open-Ended Embodied Agent with Large Language Models</b> — Guanzhi Wang 等，2023-05-25，arXiv:2305.16291。技能库与经验沉淀。<br><a href="https://arxiv.org/abs/2305.16291">arxiv.org/abs/2305.16291</a></li>
+        <li><b>A Survey on Large Language Model based Autonomous Agents</b> — Lei Wang 等，2023-08-22，arXiv:2308.11432。智能体组成框架综述。<br><a href="https://arxiv.org/abs/2308.11432">arxiv.org/abs/2308.11432</a></li>
+        </ol>
+      </div>
+    </div>
+    <p class="refnote">核对方式：链接于 2026-09-10 逐条联网访问确认可达；论文的标题、作者与提交日期取自 arXiv 官方 API 返回值，编号可在 arxiv.org 直接检索复核。以上均为公开的官方文档或学术论文原文（不含二手转述）；如需引用正式发表版本，请以论文页面标注的会议 / 期刊信息为准。</p>
   </section>
 
 </div>
 
 <footer>
   <div class="in">
-    <div class="lab">配套阅读与来源 · 内容核对于 2026-09-06</div>
-    <p>· 本仓库三页速学：<a href="agent.html">agent.html</a> · <a href="llm-context.html">llm-context.html</a> · <a href="skill.html">skill.html</a><br>
-    · Agent 定义：<a href="https://www.anthropic.com/research/building-effective-agents">Anthropic《Building effective agents》</a><br>
-    · 上下文工程：<a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic《Effective context engineering for AI agents》</a>；<a href="https://arxiv.org/abs/2307.03172">Lost in the Middle（arXiv 2307.03172）</a><br>
-    · Skill 格式：<a href="https://agentskills.io/">agentskills.io</a>；<a href="https://www.anthropic.com/news/skills">Anthropic《Introducing Agent Skills》</a></p>
+        <div class="lab">配套阅读 · 本仓库三页速学</div>
+    <p>· <a href="agent.html">agent.html</a> · <a href="llm-context.html">llm-context.html</a> · <a href="skill.html">skill.html</a><br>
+    · 三页各自的一手来源见本页第 07 节「文献资料」。</p>
   </div>
 </footer>
 
+<script>
+/* 测验引擎：三层难度（复用 concept-microcourse 技能 quiz-engine） */
+const LAYERS=[
+  {name:'入门',color:'#5db872'},
+  {name:'进阶',color:'#d4a017'},
+  {name:'挑战',color:'#c64545'}
+];
+const Q=[
+ /* 第一层 · 入门 */
+ {L:0,q:'跟着本仓库的比喻：Agent、上下文、Skill 分别像什么？',o:['三本不同的教科书','三个互不相关的软件','Agent 是干活的执行者，上下文是它此刻的桌面，Skill 是抽屉里的手册','三种不同的考试科目'],
+  a:2,e:'这个比喻能帮你记住分工：Agent 是“谁来做”，上下文是“此刻能看到什么”，Skill 是“这类活怎么做”。它们是咬合关系，不是并列的三个零件。'},
+ {L:0,q:'三者各自回答的核心问题，对应正确的是？',o:['都回答“怎么做”','Agent 回答“谁来做”，上下文回答“能看到什么”，Skill 回答“经验在哪”','都回答“什么时候做”','Agent 回答“存哪里”，上下文回答“谁来做”，Skill 回答“能不能联网”'],
+  a:1,e:'记住三句话就不会混：Agent 管“谁来做、下一步做什么”；上下文管“这一次能依据什么”；Skill 管“这类活的最佳做法从哪来”。'},
+ {L:0,q:'Agent 每一轮“想下一步”时，依据的是什么？',o:['它上一周会话的全部记忆','硬盘里所有文件','眼前的上下文里能看到的内容','随机猜测'],
+  a:2,e:'Agent 的每一次推理都只看“眼前的上下文”。这带来一个重要推论：该检索却没检索的信息，它根本不知道；塞进太多噪音，它又抓不住重点。所以上下文设计直接决定思考质量。'},
+ {L:0,q:'Skill 被“激活”后，它的正文最终去了哪里？',o:['存进数据库永久保存','直接变成一条 MCP 工具','被编译成模型参数','进入 Agent 的上下文，成为它这次思考的依据'],
+  a:3,e:'Skill 正文被读进来，就变成了上下文的一部分，供 Agent 这次照着做。这也是为什么 Skill 要精简：它一旦激活，就实实在在地占用了注意力预算。'},
+ /* 第二层 · 进阶 */
+ {L:1,q:'默认情况下，Agent 对 Skill 的了解程度是？',o:['一次性读完所有 Skill 的全部内容','只知道每个 Skill 的 name 和 description，也就是一行简介','完全不知道有 Skill 存在','只知道 Skill 的文件夹大小'],
+  a:1,e:'平时只有“一行简介”在场，只有当任务和 description 匹配时，才加载正文。这就是渐进式披露的第一层——先知道“架子上有什么”，而不是把整柜书都摊开。'},
+ {L:1,q:'“上下文决定 Agent 能想得多好，Agent 反过来决定上下文里放什么”，这说明两者是什么关系？',o:['单向依赖，上下文完全被动','毫无关系','上下文由用户单独控制，Agent 无权改变','双向咬合：上下文是 Agent 思考的边界，Agent 又在持续维护上下文'],
+  a:3,e:'这是最关键的一条：不是一方管另一方，而是互相塑造。Agent 决定“检索什么、开哪个 Skill、要不要压缩”，而这些又反过来决定了它下一轮能想得多清楚。'},
+ {L:1,q:'相比“把规范写进系统提示词”，写进 SKILL.md 的核心优势是？',o:['平时只占一行简介，命中才读正文，不长期占用上下文','规范再也不会被模型读到','文件体积更小','可以让模型完全不需要思考'],
+  a:0,e:'同样的知识，一个是“常驻占位”——每次会话开头都灌一遍；一个是“按需取用”——平时只留一行简介。窗口大小有限，省下来的注意力预算可以用在真正的任务上。'},
+ {L:1,q:'把 5 万字无关噪音塞进上下文，最可能发生什么？',o:['模型会因此更聪明，因为信息更多','没有任何影响，模型会自己忽略','噪音挤占注意力预算，关键规则和事实“沉底”，Agent 表现明显下降','模型会自动把噪音压缩掉，不用管'],
+  a:2,e:'这就是 U 型效应和上下文腐烂在起作用：内容越多，真正重要的那几条越容易被埋没、越容易被“记不准”。问题往往不在模型笨，而在上下文设计得太乱。'},
+ /* 第三层 · 挑战 */
+ {L:2,q:'为什么说“Agent 自由度高，但错误会随步数放大”？',o:['因为每一步都可能出小错，多步累积后偏差越来越大','因为步数多了电费更贵','因为模型会越跑越慢','因为工具会随机失效，与 Agent 无关'],
+  a:0,e:'自主决策是双刃剑：每一步都可能有小偏差，而下一步又是基于上一步的结果做的，误差层层叠加。这正是官方强调“能不用 Agent 就不用”和“加护栏、加人工审批点”的原因。'},
+ {L:2,q:'要沉淀一个“周报 Agent”，description 怎么写最合适？',o:['写“处理文档”，越宽泛越好','写“每周一用”，只写时间','写“仅当用户要求按公司模板生成周报时使用，不用于日报或月报”，把边界写清','随便写，description 不影响使用'],
+  a:2,e:'description 既是触发器的“关键词”，也是边界的“警戒线”。写清“何时该用、何时不该用”，Agent 才不会在该用时叫不醒、在不该用时乱用。宽泛的“处理文档”几乎等于没写。'},
+ {L:2,q:'知识“沉淀在仓库里（SKILL.md）”和“留在某次对话里”，最大差别是什么？',o:['没有差别，都是保存下来了','写进 Skill 后，下次任何会话都能复用，换台机器克隆仓库也能用；留在对话里则只属于那一次','留在对话里更安全，不会被别人看到','写进 Skill 会拖慢电脑'],
+  a:1,e:'对话里的经验，通常随会话结束就“蒸发”了；写进 SKILL.md 并提交到仓库，它就成了可版本管理、可分享、可被任意后续会话加载的资产。这是“学习成果沉淀”的关键一步。'},
+ {L:2,q:'在本仓库这条学习链路里，三个概念是如何配合的？',o:['三者各自独立工作，互不干扰','Agent 规划并循环执行 → 按需检索保持上下文精简 → 命中 Skill 后按手册产出 → 产物提交回仓库形成沉淀','Skill 负责思考，Agent 负责存储','上下文负责决策，Agent 只是传话'],
+  a:1,e:'把整条链路串起来看：Agent 是执行者（规划、调工具、自检），上下文是它维护的“小而准”桌面，Skill 是沉淀下来的方法。三者一咬合，才产出了你正在看的这四页。'},
+];
+const LCNT=[4,4,4];
+const TOTAL=12;
+const heads=['基础 · 三者的分工与定位，需全对','原理与实战 · 加载、咬合与取舍','细节辨析 · 边界与常见误区'];
+let answered=0,correct=0,layerA=[0,0,0],layerC=[0,0,0];
+const letters=['A','B','C','D'];
+function paint(){
+  document.getElementById('qbarFill').style.width=(answered/TOTAL*100)+'%';
+  document.getElementById('qDone').textContent='已答 '+answered+' / '+TOTAL;
+  document.getElementById('qScore').textContent='答对 '+correct+' 题';
+  document.getElementById('lpill').innerHTML=LAYERS.map((l,i)=>
+    '<span style="color:'+l.color+'">● '+l.name+' '+layerA[i]+'/'+LCNT[i]+'</span>').join('　');
+}
+function render(){
+  const root=document.getElementById('quizRoot');
+  root.innerHTML='';let g=0;
+  LAYERS.forEach((ly,l)=>{
+    const items=Q.filter(q=>q.L===l); if(!items.length)return;
+    const h=document.createElement('div');h.className='ghead';
+    h.innerHTML='<span class="dot" style="background:'+ly.color+'"></span>'+ly.name+
+      '<span class="cnt" style="background:'+ly.color+'">'+LCNT[l]+' 题</span><span class="tip">'+heads[l]+'</span>';
+    root.appendChild(h);
+    items.forEach(it=>{
+      g++;
+      const box=document.createElement('div');box.className='qbox';
+      box.innerHTML='<div class="qt">'+g+'. '+it.q+'</div><div class="qm">'+ly.name+' · 单选 · '+g+'/'+TOTAL+'</div>'+
+        it.o.map((op,i)=>'<div class="opt" data-i="'+i+'"><span class="key">'+letters[i]+'</span><span>'+op+'</span></div>').join('')+
+        '<div class="expl"></div>';
+      root.appendChild(box);
+      box.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+        if(box.dataset.done)return;
+        box.dataset.done='1';
+        const pick=+el.dataset.i;answered++;layerA[l]++;
+        const right=pick===it.a;
+        if(right){correct++;layerC[l]++;el.classList.add('r');}
+        else{el.classList.add('w');box.querySelectorAll('.opt')[it.a].classList.add('r');}
+        box.querySelectorAll('.opt').forEach(x=>{if(x!==el&&!(right&&x===el))x.style.opacity=.45;});
+        const ex=box.querySelector('.expl');
+        ex.classList.add('show',right?'ok':'no');
+        ex.innerHTML=(right?'✓ 答对了。':'✗ 答错了，正确答案是 '+letters[it.a]+'。')+it.e;
+        paint();if(answered===TOTAL)showResult();
+      });
+    });
+  });
+}
+function showResult(){
+  const box=document.getElementById('resultBox');box.classList.add('show');
+  document.getElementById('resScore').textContent=correct+' / '+TOTAL;
+  document.getElementById('resTiers').innerHTML=LAYERS.map((l,i)=>
+    '<div class="rt"><span class="nm" style="color:'+l.color+'">'+l.name+'</span>'+
+    '<span class="bar"><i style="width:'+(layerC[i]/LCNT[i]*100)+'%;background:'+l.color+'"></i></span>'+
+    '<span class="nu">'+layerC[i]+' / '+LCNT[i]+'</span></div>').join('');
+  const eOk=layerC[0]===LCNT[0],mOk=layerC[1]>=3,hOk=layerC[2]>=2;
+  let gd,ms;
+  if(correct===TOTAL){gd='满分';ms='三层全通。你已经能把 Agent、上下文、Skill 的关系讲清楚了。';}
+  else if(eOk&&mOk&&hOk){gd='达标通关';ms='分工会、机制会、边界也清楚。';}
+  else if(!eOk){gd='先补基础';ms='入门应 4/4：回到「三个问题 / 关系图」再看一遍。';}
+  else if(!mOk){gd='进阶层没过';ms='重点复习「关系图」与「渐进式加载」两节。';}
+  else{gd='差在细节';ms='重点看「一览表」以及噪音、触发边界那几题。';}
+  document.getElementById('resGrade').textContent=gd;
+  document.getElementById('resMsg').textContent=ms;
+  const wrong=[];
+  document.querySelectorAll('.qbox').forEach((b,i)=>{if(b.querySelector('.opt.w'))wrong.push(i+1);});
+  document.getElementById('resWrong').textContent=wrong.length?'待复习：第 '+wrong.join('、')+' 题':'';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function restartQuiz(){
+  answered=0;correct=0;layerA.fill(0);layerC.fill(0);
+  document.getElementById('resultBox').classList.remove('show');
+  paint();render();
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+}
+render();paint();
+</script>
 </body>
 </html>

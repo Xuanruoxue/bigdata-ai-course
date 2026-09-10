@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="100%" role="img" aria-labelledby="cwT cwD">
+<title id="cwT">上下文窗口里装了什么</title>
+<desc id="cwD">上下文窗口由系统提示、对话历史、资料检索、工具返回、本次输入和剩余空间六部分组成，输入和输出都算在窗口内。</desc>
+<clipPath id="winClip"><rect x="40" y="96" width="600" height="68" rx="10"/></clipPath>
+<g font-family="Inter, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+<text x="40" y="42" font-size="15" font-weight="500" fill="#141413">上下文窗口 = 一次推理能看到的全部</text>
+<text x="40" y="62" font-size="12" fill="#6c6a64">模型只认这张工作台；没进来的，它就等于不知道</text>
+
+<line x1="40" y1="86" x2="640" y2="86" stroke="#c9bfae" stroke-width="0.5"/>
+<line x1="40" y1="86" x2="40" y2="92" stroke="#c9bfae" stroke-width="0.5"/>
+<line x1="640" y1="86" x2="640" y2="92" stroke="#c9bfae" stroke-width="0.5"/>
+<text x="340" y="78" font-size="11" fill="#6c6a64" text-anchor="middle">上下文窗口上限（例如 200K token）</text>
+
+<g clip-path="url(#winClip)">
+<rect x="40" y="96" width="100" height="68" fill="#f9e7df"/>
+<rect x="140" y="96" width="110" height="68" fill="#e3f2ee"/>
+<rect x="250" y="96" width="100" height="68" fill="#cfe9e2"/>
+<rect x="350" y="96" width="110" height="68" fill="#e3f2ee"/>
+<rect x="460" y="96" width="80" height="68" fill="#f3d3c6"/>
+<rect x="540" y="96" width="100" height="68" fill="#f5f0e8"/>
+<line x1="140" y1="96" x2="140" y2="164" stroke="#faf9f5" stroke-width="2"/>
+<line x1="250" y1="96" x2="250" y2="164" stroke="#faf9f5" stroke-width="2"/>
+<line x1="350" y1="96" x2="350" y2="164" stroke="#faf9f5" stroke-width="2"/>
+<line x1="460" y1="96" x2="460" y2="164" stroke="#faf9f5" stroke-width="2"/>
+<line x1="540" y1="96" x2="540" y2="164" stroke="#c9bfae" stroke-width="0.5" stroke-dasharray="4 3"/>
+</g>
+<rect x="40" y="96" width="600" height="68" rx="10" fill="none" stroke="#e6dfd8" stroke-width="0.5"/>
+
+<g text-anchor="middle">
+<text x="90" y="125" font-size="11" font-weight="500" fill="#8f4430">系统提示</text>
+<text x="90" y="143" font-size="11" fill="#a9745c">启动装配</text>
+<text x="195" y="125" font-size="11" font-weight="500" fill="#2c6b5e">对话历史</text>
+<text x="195" y="143" font-size="11" fill="#2c6b5e">自动累积</text>
+<text x="300" y="125" font-size="11" font-weight="500" fill="#2c6b5e">资料检索</text>
+<text x="300" y="143" font-size="11" fill="#2c6b5e">按需召回</text>
+<text x="405" y="125" font-size="11" font-weight="500" fill="#2c6b5e">工具与返回</text>
+<text x="405" y="143" font-size="11" fill="#2c6b5e">每步回填</text>
+<text x="500" y="125" font-size="11" font-weight="500" fill="#8f4430">本次输入</text>
+<text x="500" y="143" font-size="11" fill="#a9745c">现场指令</text>
+<text x="590" y="125" font-size="11" font-weight="500" fill="#6c6a64">剩余空间</text>
+<text x="590" y="143" font-size="11" fill="#8e8b82">留给输出</text>
+</g>
+
+<text x="40" y="196" font-size="12" fill="#3d3d3a">① 输入 + 输出都算在窗口内 —— 一段长回答也会吃掉额度。</text>
+<text x="40" y="218" font-size="12" fill="#3d3d3a">② 注意力预算有限：每个进来的 token 都在分走模型对关键信息的注意力。</text>
+</g>
+</svg>

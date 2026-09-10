@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 412" width="100%" role="img" aria-labelledby="skT skD">
+<title id="skT">Skill 的渐进式披露</title>
+<desc id="skD">Skill 分三层加载：元数据始终常驻上下文，SKILL.md 正文在命中描述后读入，references 与脚本只在执行到那一步时才打开。</desc>
+<g font-family="Inter, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+<text x="40" y="44" font-size="15" font-weight="500" fill="#141413">渐进式披露 · 一层层展开</text>
+<text x="40" y="63" font-size="12" fill="#6c6a64">层级越深，越晚进入上下文</text>
+
+<rect x="40" y="76" width="372" height="296" rx="20" fill="#f9e7df" stroke="#cc785c" stroke-width="0.5"/>
+<text x="60" y="104" font-size="13" font-weight="500" fill="#8f4430">① 元数据 · name + description</text>
+<text x="60" y="124" font-size="11" fill="#8f4430">启动就常驻，只占几十 token</text>
+<text x="60" y="144" font-size="11" fill="#a9745c">所有 Skill 的这一行都在上下文里</text>
+
+<rect x="62" y="162" width="328" height="192" rx="14" fill="#f3d3c6" stroke="#d9a48f" stroke-width="0.5"/>
+<text x="82" y="192" font-size="13" font-weight="500" fill="#8f4430">② SKILL.md 正文</text>
+<text x="82" y="212" font-size="11" fill="#8f4430">命中 description 后整篇读入</text>
+
+<rect x="84" y="248" width="284" height="88" rx="10" fill="#e3f2ee" stroke="#5db8a6" stroke-width="0.5"/>
+<text x="102" y="274" font-size="12" font-weight="500" fill="#2c6b5e">③ references / scripts / assets</text>
+<text x="102" y="294" font-size="11" fill="#2c6b5e">做到那一步才打开</text>
+<text x="102" y="312" font-size="11" fill="#2c6b5e">脚本直接执行，不进上下文</text>
+
+<line x1="414" y1="104" x2="428" y2="104" stroke="#c9bfae" stroke-width="0.5" stroke-dasharray="3 3"/>
+<text x="432" y="100" font-size="12" font-weight="500" fill="#6c6a64">常驻开销</text>
+<text x="432" y="118" font-size="11" fill="#8e8b82">每个技能只占一行</text>
+
+<line x1="392" y1="200" x2="428" y2="200" stroke="#c9bfae" stroke-width="0.5" stroke-dasharray="3 3"/>
+<text x="432" y="196" font-size="12" font-weight="500" fill="#6c6a64">触发才读</text>
+<text x="432" y="214" font-size="11" fill="#8e8b82">读一次，照着步骤干</text>
+
+<line x1="370" y1="288" x2="428" y2="288" stroke="#c9bfae" stroke-width="0.5" stroke-dasharray="3 3"/>
+<text x="432" y="284" font-size="12" font-weight="500" fill="#6c6a64">用到才翻</text>
+<text x="432" y="302" font-size="11" fill="#8e8b82">不看就不占上下文</text>
+
+<text x="40" y="394" font-size="12" fill="#6c6a64">效果：装几十个技能也不怕撑爆上下文 —— 平时只占一点点开销。</text>
+</g>
+</svg>

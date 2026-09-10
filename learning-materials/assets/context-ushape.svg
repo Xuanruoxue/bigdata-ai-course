@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 332" width="100%" role="img" aria-labelledby="rotT rotD">
+<title id="rotT">位置效应与长度效应</title>
+<desc id="rotD">左图是 Lost in the Middle 的位置效应：关键信息放开头或结尾最好，埋在中间最容易被丢掉。右图是 Context Rot：上下文越长，模型精确回忆的能力越差。</desc>
+<g font-family="Inter, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+
+<text x="40" y="64" font-size="13" font-weight="500" fill="#141413">① 位置效应：中间最易丢</text>
+<text x="350" y="64" font-size="13" font-weight="500" fill="#141413">② 长度效应：越长越差</text>
+
+<rect x="40" y="76" width="290" height="212" rx="12" fill="#f5f0e8" stroke="#e6dfd8" stroke-width="0.5"/>
+<line x1="64" y1="110" x2="64" y2="244" stroke="#c9bfae" stroke-width="0.5"/>
+<line x1="64" y1="244" x2="314" y2="244" stroke="#c9bfae" stroke-width="0.5"/>
+<text x="64" y="102" font-size="11" fill="#6c6a64">召回率</text>
+<path d="M72 130 C112 156 138 222 186 222 C234 222 268 172 306 150" fill="none" stroke="#cc785c" stroke-width="2"/>
+<circle cx="186" cy="222" r="4" fill="#c64545"/>
+<text x="186" y="204" font-size="11" fill="#c64545" text-anchor="middle">最易丢</text>
+<text x="76" y="262" font-size="11" fill="#8e8b82" text-anchor="middle">开头</text>
+<text x="186" y="262" font-size="11" fill="#8e8b82" text-anchor="middle">中间</text>
+<text x="300" y="262" font-size="11" fill="#8e8b82" text-anchor="middle">结尾</text>
+<text x="189" y="281" font-size="11" fill="#6c6a64" text-anchor="middle">信息在窗口中的位置</text>
+
+<rect x="350" y="76" width="290" height="212" rx="12" fill="#f5f0e8" stroke="#e6dfd8" stroke-width="0.5"/>
+<line x1="374" y1="110" x2="374" y2="244" stroke="#c9bfae" stroke-width="0.5"/>
+<line x1="374" y1="244" x2="624" y2="244" stroke="#c9bfae" stroke-width="0.5"/>
+<text x="374" y="102" font-size="11" fill="#6c6a64">有效利用</text>
+<path d="M382 130 C440 148 540 182 614 208" fill="none" stroke="#cc785c" stroke-width="2"/>
+<text x="500" y="158" font-size="11" fill="#6c6a64" text-anchor="middle">缓坡下滑，不是悬崖</text>
+<text x="382" y="262" font-size="11" fill="#8e8b82" text-anchor="middle">短</text>
+<text x="618" y="262" font-size="11" fill="#8e8b82" text-anchor="middle">长</text>
+<text x="499" y="281" font-size="11" fill="#6c6a64" text-anchor="middle">上下文长度</text>
+
+<text x="340" y="312" font-size="12" fill="#6c6a64" text-anchor="middle">两张图合起来一句话：位置要放对，长度要控住。</text>
+</g>
+</svg>

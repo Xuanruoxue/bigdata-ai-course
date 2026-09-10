@@ -161,6 +161,23 @@ footer p{font-size:13px;line-height:1.55;color:var(--on-dark-soft);margin:var(--
 footer a{color:var(--primary);text-decoration:none}
 footer a:hover{color:#e0a288}
 @media(max-width:720px){footer .in{padding:var(--s-xxl) var(--s-lg)}}
+/* 文献资料 */
+.refs{display:grid;gap:var(--s-md)}
+.refcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-lg)}
+.refcard h3{margin:0 0 var(--s-sm);font-size:14px;font-weight:500;color:var(--ink);display:flex;align-items:center;gap:var(--s-xs);flex-wrap:wrap}
+.refcard h3 .tag{font-size:12px;font-weight:500;color:var(--body);background:var(--soft);border:1px solid var(--hair);border-radius:var(--r-pill);padding:2px 9px}
+.refcard ol{margin:0;padding-left:1.5em}
+.refcard li{font-size:13px;line-height:1.65;color:var(--body);margin-bottom:10px}
+.refcard li:last-child{margin-bottom:0}
+.refcard li b{color:var(--ink);font-weight:500}
+.refcard li a{color:var(--primary);text-decoration:none;word-break:break-all}
+.refcard li a:hover{text-decoration:underline}
+.refcard li .src{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.refnote{font-size:12px;line-height:1.6;color:var(--muted);border-left:3px solid var(--primary);background:var(--soft);border-radius:0 var(--r-md) var(--r-md) 0;padding:var(--s-sm) var(--s-md);margin:var(--s-md) 0 0}
+
+.figimg{margin:var(--s-md) 0 0;padding:var(--s-md);background:var(--canvas);border:1px solid var(--hair);border-radius:var(--r-lg)}
+.figimg img{display:block;width:100%;max-width:820px;margin:0 auto;height:auto}
+.figimg figcaption{font-size:12px;line-height:1.5;color:var(--muted-soft);text-align:center;margin-top:var(--s-sm)}
 </style>
 </head>
 <body>
@@ -212,6 +229,11 @@ footer a:hover{color:#e0a288}
     <div class="lvl"><span class="idx">04</span><div><b>🛠️ 工具与返回 · Tools</b><br><span class="t">工具/函数定义 + 每次调用结果。Agent 每“动”一步，都会往窗口里回填一截新内容。</span></div></div>
     <div class="lvl"><span class="idx">05</span><div><b>🎯 本次输入 · Query</b><br><span class="t">用户最新的问题或目标，是模型最需要聚焦的“现场指令”。</span></div></div>
     <p class="mininote">输入 <b>+</b> 输出都算在窗口内：一段长回答也会消耗窗口额度。<b>窗口 = 全部上下文 + 正在生成的内容。</b></p>
+  
+    <figure class="figimg">
+      <img src="assets/context-window.svg" alt="上下文窗口的六个组成部分" loading="lazy">
+      <figcaption>图 1 · 窗口里装了什么：六块内容共享同一个上限，输入加输出都算在内</figcaption>
+    </figure>
   </section>
 
   <!-- 03 为何有限 -->
@@ -248,6 +270,11 @@ footer a:hover{color:#e0a288}
       <div class="pcard"><p class="h">🥀 上下文腐烂 · Context Rot</p><p>Anthropic 在上下文工程文章中指出：token 越多，模型<b>精确回忆</b>信息的能力越下降——所有模型都如此，只是下降斜率不同。性能是“缓坡”而不是“悬崖”。</p></div>
       <div class="pcard"><p class="h">📉 注意力预算有限</p><p>每个进窗口的 token 都在分走模型的“注意力预算”。工程目标是：<b>用最小的高信号 token 集合</b>达成目标，而不是把窗口塞满。</p></div>
     </div>
+  
+    <figure class="figimg">
+      <img src="assets/context-ushape.svg" alt="位置效应 U 型曲线与长度效应下降曲线" loading="lazy">
+      <figcaption>图 2 · 两个实证现象：中间最易丢，越长越难用</figcaption>
+    </figure>
   </section>
 
   <!-- 05 比方 -->
@@ -333,15 +360,38 @@ footer a:hover{color:#e0a288}
     </div>
   </section>
 
+
+  <!-- 11 文献资料 -->
+  <section id="refs">
+    <div class="k"><span class="n">11</span><h2 class="display-md">文献资料</h2><span class="sub">官方文档 ＋ 学术论文 · 逐条核对</span></div>
+    <p class="sub">本页只依据<b>一手来源</b>：产品官方文档与公开可检索的学术论文。第三方厂商博客等<b>非一手</b>材料已移至页脚，仅作延伸线索。</p>
+    <div class="refs">
+      <div class="refcard">
+        <h3>官方文档与规范<span class="tag">一手</span></h3>
+        <ol>
+        <li><b>What is a long context window?</b> — Google（The Keyword 官方博客，Google DeepMind 团队访谈）。把上下文窗口解释为模型「短期记忆」的官方口径。<br><a href="https://blog.google/technology/ai/long-context-window-ai-models/">blog.google/technology/ai/long-context-window-ai-models/</a></li>
+        <li><b>Effective context engineering for AI agents</b> — Anthropic Engineering，2025-09-29。提出上下文腐化（context rot）、注意力预算（attention budget）与即时检索（just-in-time）。<br><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</a></li>
+        </ol>
+      </div>
+      <div class="refcard">
+        <h3>学术论文<span class="tag">一手 · arXiv 可查</span></h3>
+        <ol>
+        <li><b>Lost in the Middle: How Language Models Use Long Contexts</b> — Nelson F. Liu 等，2023-07-06，arXiv:2307.03172。长上下文中信息「位置效应」（U 型曲线）的原始实验。<br><a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a></li>
+        <li><b>RULER: What's the Real Context Size of Your Long-Context Language Models?</b> — Cheng-Ping Hsieh 等，2024-04-09，arXiv:2404.06654。说明「标称窗口」不等于「有效窗口」。<br><a href="https://arxiv.org/abs/2404.06654">arxiv.org/abs/2404.06654</a></li>
+        <li><b>Attention Is All You Need</b> — Ashish Vaswani 等，2017-06-12，arXiv:1706.03762。自注意力机制原文——窗口上限与注意力开销的架构根源。<br><a href="https://arxiv.org/abs/1706.03762">arxiv.org/abs/1706.03762</a></li>
+        </ol>
+      </div>
+    </div>
+    <p class="refnote">核对方式：链接于 2026-09-10 逐条联网访问确认可达；论文的标题、作者与提交日期取自 arXiv 官方 API 返回值，编号可在 arxiv.org 直接检索复核。以上均为公开的官方文档或学术论文原文（不含二手转述）；如需引用正式发表版本，请以论文页面标注的会议 / 期刊信息为准。</p>
+  </section>
+
 </div>
 
 <footer>
   <div class="in">
-    <div class="lab">可核查来源 · 内容核对于 2026-09-06</div>
-    <p>· Google《What is a long context window?》（上下文窗口定义的官方科普）：<a href="https://blog.google/innovation-and-ai/products/long-context-window-ai-models/">blog.google/innovation-and-ai/products/long-context-window-ai-models/</a><br>
-    · Anthropic《Effective context engineering for AI agents》（上下文腐烂 / 注意力预算 / 压缩与按需检索）：<a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">anthropic.com/engineering/effective-context-engineering-for-ai-agents</a><br>
-    · Liu et al.《Lost in the Middle: How Language Models Use Long Contexts》（U 型现象，TACL 2024）：<a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a><br>
-    · Redis《LLM context windows》（窗口机制科普与模型对照表，第三方，数据截至 2025 年中）：<a href="https://redis.io/en/blog/llm-context-windows">redis.io/en/blog/llm-context-windows</a></p>
+        <div class="lab">延伸阅读 · 非一手资料（仅作线索，引用请回溯原文）</div>
+    <p>· Redis《LLM context windows》（第三方厂商博客，含各家模型窗口对照表，数据截至 2025 年中）：<a href="https://redis.io/en/blog/llm-context-windows">redis.io/en/blog/llm-context-windows</a><br>
+    · 本页引用的一手来源见第 11 节「文献资料」。</p>
     <p style="opacity:.72">页面由 concept-microcourse 技能生成，视觉采用 Anthropic/Claude 设计 token。个人解释与整理经人工核查。</p>
   </div>
 </footer>
@@ -355,32 +405,32 @@ const LAYERS=[
 ];
 const Q=[
  /* 第一层 · 入门 */
- {L:0,q:'“上下文窗口”最准确的说法是？',o:['一次推理中，模型能同时处理的 token 上限，模型本次只能看到这些','模型硬盘的缓存文件夹','训练时见过的全部数据','聊天历史备份'],
-  a:0,e:'窗口＝本次可见的全部；系统提示、历史、资料、工具结果都算在内。'},
- {L:0,q:'官方常把上下文窗口比作模型的什么？',o:['网盘','操作系统','工作记忆（working memory）','数据库'],
-  a:2,e:'Google 科普里就说模型会“在对话中忘记信息”，长窗口正是要缓解这种“记不住”。'},
- {L:0,q:'下面哪些会占用上下文窗口？',o:['只有系统提示','只有用户输入','以上全都占：系统提示、历史、资料、工具返回、本次输入','只有模型参数'],
-  a:2,e:'窗口内既有常驻规则也有临时内容，甚至模型生成的回答也算在内。'},
- {L:0,q:'窗口之外的信息，对模型意味着什么？',o:['稍后会自动想起来','等于不存在，除非重新放进来','保存在长期记忆里随时可用','已存到磁盘无需处理'],
-  a:1,e:'模型不会“自己想起”窗口外的东西，只有下次推理前被重新放入才有用。'},
+ {L:0,q:'“上下文窗口”最准确的理解是？',o:['模型硬盘上的缓存文件夹','模型训练时见过的全部数据','一次推理中模型能同时处理的 token 上限，它这一次只能看到这些','聊天的历史备份'],
+  a:2,e:'窗口就是模型的“视野范围”：这一次推理里，它最多能同时看到多少 token。系统提示、聊天历史、检索资料、工具返回、你这次说的话，全挤在这一个窗口里；窗口外的内容它看不见。'},
+ {L:0,q:'官方科普常把上下文窗口比作模型的什么？',o:['网盘','工作记忆（working memory）','数据库','操作系统'],
+  a:1,e:'叫它“工作记忆”很贴切：就像人脑临时记住正在处理的信息。Google 的科普里说模型会“聊着聊着就忘了”，长窗口就是用来缓解这种“记不住”的。'},
+ {L:0,q:'下面哪些东西会占用上下文窗口？',o:['只有系统提示','只有你输入的这一句','只有模型参数','系统提示、历史、检索资料、工具返回、本次输入，全都占'],
+  a:3,e:'窗口是个“总容量”，不是只装用户输入。常驻的系统规则、越滚越长的聊天历史、检索来的文档、工具返回的结果，还有模型自己上一步的回答，统统算在里面。'},
+ {L:0,q:'如果某个信息没被放进窗口，对模型意味着什么？',o:['等于不存在，除非下一次推理前重新放进去','它稍后会自己想起来','已自动存进长期记忆，随时可取','存在磁盘上，需要时会自动读取'],
+  a:0,e:'模型不会“自己想起”窗口外的东西——它没有可随时翻查的记忆库。只有在下一次推理前把信息重新塞进窗口，它才看得见。很多“它怎么忘了”的根源就在这里。'},
  /* 第二层 · 进阶 */
- {L:1,q:'窗口上限主要来自哪些硬约束？',o:['注意力 n² 复杂度、KV 缓存占显存、训练长度','显卡风扇转速、CPU 核心数','提示词长短','对话轮数'],
-  a:0,e:'数学、硬件、训练分布三方面共同决定；所以厂商要“扩窗”很难。'},
- {L:1,q:'“Lost in the Middle”指的是什么现象？',o:['模型只记得开头','窗口越短越差','关键信息放在长上下文中间时最容易被模型漏用，首尾较好','信息放在末尾最差'],
-  a:2,e:'Liu et al. 2023：用长上下文时模型对中间内容利用显著变差，呈 U 型。'},
- {L:1,q:'“上下文腐烂（Context Rot）”指？',o:['上下文 token 越多，模型精确回忆能力越下降（缓坡而非悬崖）','文字放久了会损坏','超过窗口会报错崩溃','模型需要定期重启'],
-  a:0,e:'Anthropic 上下文工程文章：所有模型都受影响，只是下降斜率不同。'},
- {L:1,q:'会话接近窗口上限时，工程上常用的“续命”手段是？',o:['把旧内容压成摘要、需要时再按需检索','把对话全部删掉重开','把窗口调到无限大','把内容复制多份以防丢失'],
-  a:0,e:'压缩（compaction）、按需检索、结构化笔记、子代理隔离，都是把“低信号 token”请出窗口。'},
+ {L:1,q:'上下文窗口的上限，主要由哪些硬约束决定？',o:['注意力机制的 n² 计算量、KV 缓存的显存占用、模型训练时的长度','显卡风扇转速和 CPU 核心数','提示词写得多长','对话轮数的多少'],
+  a:0,e:'三个硬钉子：注意力计算量随长度平方增长（n²）、KV 缓存吃显存、模型训练时就定下了长度范围。所以“扩窗”是工程难题，不是改个数字那么简单。'},
+ {L:1,q:'论文里的“Lost in the Middle”说的是什么现象？',o:['关键信息放在长上下文的中间时最容易被漏掉，开头和结尾反而记得好','模型只记得开头，中间和结尾都忘','窗口越短，表现越差','信息放在结尾时最差'],
+  a:0,e:'这是 Liu 等人 2023 年的发现：长上下文里信息利用率呈 U 型——放开头、结尾能用上，埋在中间最容易被忽略。所以“重要要求放前面”不是玄学，是有实验依据的。'},
+ {L:1,q:'“上下文腐烂（Context Rot）”指的是？',o:['文字放久了会损坏','超过窗口就会报错崩溃','上下文 token 越多，模型精确回忆的能力越下降，是一条缓坡而不是悬崖','模型需要定期重启'],
+  a:2,e:'Anthropic 的说法：不是塞到满才崩，而是随着内容变多，模型“回忆得准”的能力慢慢下滑，像缓坡。所有模型都有这毛病，只是下滑快慢不同。所以“塞得越满越好”是错觉。'},
+ {L:1,q:'会话快到窗口上限时，工程上常用的“续命”手段是？',o:['把对话全部删掉重开','把旧内容压缩成摘要，需要时再按需检索','把窗口调到无限大','把内容复制多份以防丢失'],
+  a:1,e:'核心思路是把“低信号”的内容请出窗口：旧对话压成摘要（compaction）、需要时才检索相关片段、把关键结论写成结构化笔记。窗口腾干净了，模型才有注意力处理当前重点。'},
  /* 第三层 · 挑战 */
- {L:2,q:'系统提示放在很长的上下文里，会怎样？',o:['可能被海量中间内容“淹没”，规则效力下降','永远最优先，不受位置影响','会自动上浮到开头','和普通文本毫无区别'],
-  a:0,e:'长上下文中位置影响可用性：越靠前越稳，越靠后次之，埋在中间最危险。'},
- {L:2,q:'关于 token 与“字数”的关系，正确的是？',o:['不等价：一个词可拆成多个子词 token，语言不同占比也不同','1 个汉字永远 = 1 token','1 token 永远 = 1 个词','与具体 tokenizer 无关'],
-  a:0,e:'窗口以 token 计，估算容量要用 tokenizer 换算，别按字数拍脑袋。'},
- {L:2,q:'Anthropic 把上下文工程的核心目标概括为？',o:['窗口越大越好','用最小的“高信号 token 集合”达成期望结果','提示词越长越好','把所有资料一次性塞满'],
-  a:1,e:'注意力预算是稀缺资源：目标是“少而准”，不是“多而全”。'},
- {L:2,q:'关于“窗口大 = 能力强”的说法？',o:['不完全对：大窗口更贵更慢，仍有腐烂与 U 型问题，关键在用好','完全正确，越大永远越准','只影响价格不影响质量','大窗口能消除幻觉'],
-  a:0,e:'大窗口只是“能装”，不等于“用得好”；结构、位置与筛选更关键。'}
+ {L:2,q:'系统提示是一条必须遵守的规则。把它放在很长上下文的靠中间位置，最可能发生什么？',o:['它会自动上浮到最前面','仍然永远最优先，位置无所谓','可能被大量中间内容“淹没”，规则效力下降','和普通文本毫无区别，一定被完全忽略'],
+  a:2,e:'规则也要“被看见”才有效。长上下文里位置影响可用性：靠前最稳，靠后次之，埋在中间最容易失效。所以系统提示通常放最前面，而不是埋在中间。'},
+ {L:2,q:'关于 token 和“字数”的关系，下面哪种说法对？',o:['1 个汉字永远等于 1 个 token','1 个 token 永远等于 1 个单词','两者关系固定，和分词器无关','两者不等价：一个词可能被拆成多个子词 token，不同语言占比也不同'],
+  a:3,e:'token 是模型的分词单位，不是字数。同一个词在不同分词器（tokenizer）下可能切成不同数量的 token，中文、英文的换算比例也不一样。估算容量要用对应模型的分词器，别按字数拍脑袋。'},
+ {L:2,q:'Anthropic 在《上下文工程》里，把核心目标概括成哪句话？',o:['窗口越大越好，能塞多少塞多少','用最小的“高信号 token 集合”达成期望结果','提示词越长，模型越聪明','把所有相关资料一次性全塞进去'],
+  a:1,e:'关键词是“高信号”和“最小”。注意力预算很稀缺，目标不是“多而全”，而是“少而准”——每一条放进窗口的内容，都应该对当前任务有用。'},
+ {L:2,q:'“窗口大＝能力强”这个说法对吗？',o:['完全正确，窗口越大回答一定越准','只影响价格，不影响质量','大窗口能彻底消除幻觉','不完全对：大窗口更贵更慢，而且照样有腐烂和 U 型问题，关键在会不会用好'],
+  a:3,e:'大窗口只是“能装更多”，不代表“用得更准”。它更慢更贵，也一样受上下文腐烂和位置效应影响。真正决定效果的是内容怎么筛、怎么排。'},
 ];
 const LCNT=[4,4,4];
 const TOTAL=12;
@@ -420,7 +470,7 @@ function render(){
         box.querySelectorAll('.opt').forEach(x=>{if(x!==el&&!(right&&x===el))x.style.opacity=.45;});
         const ex=box.querySelector('.expl');
         ex.classList.add('show',right?'ok':'no');
-        ex.innerHTML=(right?'✓ 对':'✗ 答案是 '+letters[it.a])+'：'+it.e;
+        ex.innerHTML=(right?'✓ 答对了。':'✗ 答错了，正确答案是 '+letters[it.a]+'。')+it.e;
         paint();if(answered===TOTAL)showResult();
       });
     });

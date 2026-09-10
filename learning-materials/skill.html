@@ -157,6 +157,23 @@ footer p{font-size:13px;line-height:1.55;color:var(--on-dark-soft);margin:var(--
 footer a{color:var(--primary);text-decoration:none}
 footer a:hover{color:#e0a288}
 @media(max-width:720px){footer .in{padding:var(--s-xxl) var(--s-lg)}}
+/* 文献资料 */
+.refs{display:grid;gap:var(--s-md)}
+.refcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:var(--s-lg)}
+.refcard h3{margin:0 0 var(--s-sm);font-size:14px;font-weight:500;color:var(--ink);display:flex;align-items:center;gap:var(--s-xs);flex-wrap:wrap}
+.refcard h3 .tag{font-size:12px;font-weight:500;color:var(--body);background:var(--soft);border:1px solid var(--hair);border-radius:var(--r-pill);padding:2px 9px}
+.refcard ol{margin:0;padding-left:1.5em}
+.refcard li{font-size:13px;line-height:1.65;color:var(--body);margin-bottom:10px}
+.refcard li:last-child{margin-bottom:0}
+.refcard li b{color:var(--ink);font-weight:500}
+.refcard li a{color:var(--primary);text-decoration:none;word-break:break-all}
+.refcard li a:hover{text-decoration:underline}
+.refcard li .src{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.refnote{font-size:12px;line-height:1.6;color:var(--muted);border-left:3px solid var(--primary);background:var(--soft);border-radius:0 var(--r-md) var(--r-md) 0;padding:var(--s-sm) var(--s-md);margin:var(--s-md) 0 0}
+
+.figimg{margin:var(--s-md) 0 0;padding:var(--s-md);background:var(--canvas);border:1px solid var(--hair);border-radius:var(--r-lg)}
+.figimg img{display:block;width:100%;max-width:820px;margin:0 auto;height:auto}
+.figimg figcaption{font-size:12px;line-height:1.5;color:var(--muted-soft);text-align:center;margin-top:var(--s-sm)}
 </style>
 </head>
 <body>
@@ -226,6 +243,11 @@ footer a:hover{color:#e0a288}
       <div class="loopback">↺ 平时只占一点点开销；<b>装几十个技能也不怕把上下文撑爆</b></div>
     </div>
     <p class="mininote">这正是 Anthropic 强调的“<b>模型在上下文聚焦、信息相关时表现更好</b>”——与“上下文”那页讲的注意力预算是同一件事。</p>
+  
+    <figure class="figimg">
+      <img src="assets/skill-progressive.svg" alt="Skill 渐进式披露的三层结构" loading="lazy">
+      <figcaption>图 1 · 渐进式披露：三层由浅入深，越深越晚进入上下文</figcaption>
+    </figure>
   </section>
 
   <!-- 04 比方 -->
@@ -313,16 +335,39 @@ description: 把任意文本整理成 3 条要点的摘要。
     </div>
   </section>
 
+
+  <!-- 10 文献资料 -->
+  <section id="refs">
+    <div class="k"><span class="n">10</span><h2 class="display-md">文献资料</h2><span class="sub">官方文档 ＋ 学术论文 · 逐条核对</span></div>
+    <p class="sub">本页只依据<b>一手来源</b>：官方发布说明、开放标准主页与官方示例仓库；另附思想最接近的学术论文。</p>
+    <div class="refs">
+      <div class="refcard">
+        <h3>官方文档与规范<span class="tag">一手</span></h3>
+        <ol>
+        <li><b>Introducing Agent Skills</b> — Anthropic（Claude 官方博客），2025-10-16 发布、2025-12-18 更新。Skills 的官方发布说明。<br><a href="https://claude.com/blog/skills">claude.com/blog/skills</a></li>
+        <li><b>Equipping agents for the real world with Agent Skills</b> — Anthropic Engineering，2025-10-16。渐进式披露的三层加载机制与技能编写规范。<br><a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></li>
+        <li><b>Agent Skills 开放标准主页</b> — Agent Skills 官方站点。定义 SKILL.md 格式与目录结构（scripts / references / assets）。<br><a href="https://agentskills.io/">agentskills.io/</a></li>
+        <li><b>Agent Skills 标准协作仓库</b> — GitHub 官方仓库。标准的演进与客户端兼容情况。<br><a href="https://github.com/agentskills/agentskills">github.com/agentskills/agentskills</a></li>
+        <li><b>Anthropic 官方示例技能仓库</b> — GitHub。官方发布的可运行 Skill 实例（PDF、表格等）。<br><a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a></li>
+        </ol>
+      </div>
+      <div class="refcard">
+        <h3>学术论文<span class="tag">一手 · arXiv 可查</span></h3>
+        <ol>
+        <li><b>Voyager: An Open-Ended Embodied Agent with Large Language Models</b> — Guanzhi Wang 等，2023-05-25，arXiv:2305.16291。让智能体把成功经验沉淀成「可增长技能库」的代表性工作——Skill 思想的学术前身。<br><a href="https://arxiv.org/abs/2305.16291">arxiv.org/abs/2305.16291</a></li>
+        </ol>
+      </div>
+    </div>
+    <p class="refnote">核对方式：链接于 2026-09-10 逐条联网访问确认可达；论文的标题、作者与提交日期取自 arXiv 官方 API 返回值，编号可在 arxiv.org 直接检索复核。以上均为公开的官方文档或学术论文原文（不含二手转述）；如需引用正式发表版本，请以论文页面标注的会议 / 期刊信息为准。 补充说明：Agent Skills 是 2025 年发布的工业界开放标准，目前尚无同行评议论文；上列为思想脉络上最接近的学术工作。</p>
+  </section>
+
 </div>
 
 <footer>
   <div class="in">
-    <div class="lab">可核查来源 · 内容核对于 2026-09-06</div>
-    <p>· Anthropic《Introducing Agent Skills》（发布说明，2025-10-16 / 更新 2025-12-18）：<a href="https://www.anthropic.com/news/skills">anthropic.com/news/skills</a><br>
-    · Anthropic 工程博客《Equipping agents for the real world with Agent Skills》（渐进式披露与开发规范）：<a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a><br>
-    · Agent Skills 开放标准主页（SKILL.md 格式与兼容产品展示）：<a href="https://agentskills.io/">agentskills.io</a><br>
-    · Anthropic 开源示例仓库：<a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a><br>
-    · 本仓库实践：项目级 Skill 位于 <a href="https://github.com/Xuanruoxue/bigdata-ai-course">github.com/Xuanruoxue/bigdata-ai-course</a> 的 .workbuddy/skills/</p>
+        <div class="lab">延伸阅读 · 本仓库实践</div>
+    <p>· 本仓库的项目级 Skill 位于 <a href="https://github.com/Xuanruoxue/bigdata-ai-course">github.com/Xuanruoxue/bigdata-ai-course</a> 的 .workbuddy/skills/（如 concept-microcourse，即生成本页的技能）。<br>
+    · 本页引用的一手来源见第 10 节「文献资料」。</p>
     <p style="opacity:.72">页面由 concept-microcourse 技能生成，视觉采用 Anthropic/Claude 设计 token。个人解释与整理经人工核查。</p>
   </div>
 </footer>
@@ -336,32 +381,32 @@ const LAYERS=[
 ];
 const Q=[
  /* 第一层 · 入门 */
- {L:0,q:'一个 Skill 的最小形态是什么？',o:['一行超长提示词','一个装有 SKILL.md 的文件夹','一个编译好的程序','一张数据库表'],
-  a:1,e:'Skill 就是一个目录；最简只有 SKILL.md：YAML 头 + 指令正文。'},
- {L:0,q:'SKILL.md 顶部的 YAML frontmatter 至少要写？',o:['HTML 编码','许可证全文','作者电话','name 与 description（干什么、何时用）'],
-  a:3,e:'name 是唯一标识，description 告诉 Agent “何时该用我”。'},
- {L:0,q:'关于 SKILL.md 正文，正确的是？',o:['必须把所有内容写在一个文件里','正文可引用同目录的 references / scripts / assets','Skill 不能包含代码','正文越短越好，最好为空'],
-  a:1,e:'内容多了就拆到周边文件，需要时才读；脚本直接执行、不进上下文。'},
- {L:0,q:'Agent 什么时候才读取一个 Skill 的完整内容？',o:['任何对话一开始就全部读完','当任务与它的 description 匹配时','用户必须手动输入技能名','随机触发'],
-  a:1,e:'平时只有 name/description 在场；命中任务才加载全文——这叫渐进式披露。'},
+ {L:0,q:'一个 Skill 的最小形态是什么？',o:['一个装着 SKILL.md 的文件夹','一行超长提示词','一个编译好的程序','一张数据库表'],
+  a:0,e:'Skill 本质就是一个文件夹，最简单的只有一个 SKILL.md：顶部一段 YAML 说明“我是谁、什么时候用我”，下面是具体指令正文。不需要安装包，也不需要编译。'},
+ {L:0,q:'SKILL.md 顶部的 YAML frontmatter，至少必须写哪两项？',o:['许可证全文和作者电话','HTML 编码和字体','name 与 description（干什么、何时用）','版本号和公司地址'],
+  a:2,e:'只有两项是必需的：name（唯一标识）和 description（告诉 Agent“什么时候该叫醒我”）。其中 description 最关键——写得准不准，直接决定 Skill 会不会在对的时机被触发。'},
+ {L:0,q:'关于 SKILL.md 的正文，下面哪种说法正确？',o:['必须把所有内容都塞进这一个文件','Skill 里绝对不能包含代码','正文越短越好，最好完全是空的','正文可以引用同目录的 references / scripts / assets 等文件'],
+  a:3,e:'正文只是“目录和主线”。内容多了就拆到周边文件：详细资料放 references、脚本放 scripts、素材放 assets，需要时再读。脚本是直接执行的，不会把代码全文灌进上下文，所以特别省。'},
+ {L:0,q:'Agent 一般在什么时候才会读取一个 Skill 的完整内容？',o:['每次对话一开始就全部读完','用户必须手动输入技能名字','随机触发，看运气','当当前任务和它的 description 匹配时'],
+  a:3,e:'平时 Agent 只知道每个 Skill 的“一行简介”（name＋description），只有当任务匹配上了，才把正文加载进来。这正是 Skill 省上下文的关键：不用时不占地方。'},
  /* 第二层 · 进阶 */
- {L:1,q:'渐进式披露的三级顺序是？',o:['发现（元数据）→ 激活（读全文）→ 执行（脚本/文件）','执行 → 激活 → 发现','一次全部读入','只读脚本不读正文'],
-  a:0,e:'先知道“有什么”，再判断“要不要用”，最后才“翻开细节”。'},
- {L:1,q:'相比“把规则写进系统提示词”，Skill 的好处是？',o:['规则只出现一次，命中才占用上下文，不重复刷屏','提示词会变短','回答一定更正确','完全不需要模型阅读'],
-  a:0,e:'同样一套规范，不用每次会话开头都灌一遍，也就少占注意力预算。'},
- {L:1,q:'为什么 Skill 可以带“可执行代码”？',o:['确定性操作交给代码更可靠，比让模型生成稳定','代码会占满上下文','模型不能读文本','Skill 必须无代码'],
-  a:0,e:'如精确算数、填 PDF 坐标这类事，脚本执行比“token 生成”更稳更省。'},
- {L:1,q:'“Composable（可组合）”指 Skill 的什么特性？',o:['一个 Skill 只能做一件事','技能之间不能共存','多个技能可叠加，由 Agent 判断何时组合使用','只能由人类手动拼接'],
-  a:2,e:'聚焦的单点技能 + Agent 自动编排 = 复杂任务也能拆解完成。'},
+ {L:1,q:'“渐进式披露”的三级先后顺序是？',o:['执行脚本 → 激活全文 → 发现有这个技能','发现（看元数据）→ 激活（读正文）→ 执行（用脚本或细节文件）','一次性全部读入','只读脚本，从不读正文'],
+  a:1,e:'就像查手册：先知道“架子上有这本书”（发现），判断有用再“翻开这一章”（激活），最后照着做并翻到更细的附录（执行）。层层深入，每一步只加载当下需要的部分。'},
+ {L:1,q:'相比“把规则直接写进系统提示词”，用 Skill 的好处是什么？',o:['规则在系统提示里只出现一次，但每次会话都占着窗口','提示词会变短，所以模型更聪明','回答一定更正确，不会出错','完全不需要模型去阅读规则'],
+  a:0,e:'区别在“常驻占位”还是“按需取用”。写进系统提示词，意味着每开一个新会话、每一次推理，这套规则都占着注意力预算；写成 Skill，平时只留一行简介，命中才加载正文。'},
+ {L:1,q:'为什么 Skill 允许、甚至鼓励带“可执行脚本”？',o:['代码会把上下文占满，好处是看起来更强','像精确算数、按固定坐标填 PDF 这类确定性操作，交给代码执行比让模型“生成”更稳定可靠','模型不能读文本，只能看代码','能体现 Skill 更高级'],
+  a:1,e:'模型生成内容本质是“预测下一个词”，算数或填坐标容易出错；而脚本是确定性的，同样的输入必然得到同样的输出。让专业的工具干专业的事，又稳又省。'},
+ {L:1,q:'“Composable（可组合）”说的是 Skill 的什么特性？',o:['一个 Skill 只能做一件事，做完就失效','技能之间互相排斥，不能共存','多个单点技能可以叠加，由 Agent 判断何时组合使用','必须由人类手动把技能拼接起来'],
+  a:2,e:'每个 Skill 聚焦做好一件事，就像一套乐高积木。Agent 是那个搭积木的人：面对复杂任务时，它会自己判断该依次或组合使用哪几个 Skill，拼出完整流程。'},
  /* 第三层 · 挑战 */
- {L:2,q:'description 写得含糊，主要后果是？',o:['Agent 容易在该用时没“叫醒”它，或误用','文件图标会变','页面会更卡','没有后果'],
-  a:0,e:'触发靠 description 匹配：写得准，才能在对的时候被加载。'},
- {L:2,q:'Skill 与 MCP 工具的关系，正确的是？',o:['它们完全是一回事','Skill 已经取代 MCP','Skill 内部不能提到工具','两者不同层：Skill 教“怎么做”，MCP 提供“能做什么”，常互补'],
-  a:3,e:'工具是 Agent 的“手脚”，Skill 是“操作手册”；手册里可以指挥手脚。'},
- {L:2,q:'为什么安装陌生人的 Skill 要谨慎？',o:['其中的指令/脚本可能诱导越权、外泄数据，官方建议只装可信来源','Skill 文件太大','官方无法渲染 Markdown','Skill 需要付费授权'],
-  a:0,e:'Skill 可含可执行代码：等于把程序交给 Agent 跑，先审计再放行。'},
- {L:2,q:'本仓库的 concept-microcourse 属于哪种 Skill？',o:['项目级 Skill：放在 .workbuddy/skills/ 下，随仓库走','模型自带的参数','一个 MCP 服务器','数据库索引'],
-  a:0,e:'项目级 Skill 与代码一起提交，换台机器克隆仓库即可继续使用。'}
+ {L:2,q:'description 写得太含糊，最直接的后果是什么？',o:['文件图标会显示异常','Agent 容易在该用它的时候没“叫醒”它，或者在不该用时误用','页面加载变慢','没有任何后果，只是不好看'],
+  a:1,e:'因为触发靠 description 和任务做匹配。写“处理文档”就太宽；写“仅当用户要求按公司模板生成周报时使用，不用于日报”就精准得多。边界越清楚，误触发越少。'},
+ {L:2,q:'Skill 和 MCP 工具是什么关系？',o:['它们完全是同一个东西','Skill 已经取代了 MCP','Skill 内部不能再提到任何工具','不同层次：Skill 教“这类事怎么做”，MCP 提供“能做哪些事”，两者常常配合'],
+  a:3,e:'打个比方：MCP 是给 Agent 装上的手脚（能查库、能发邮件），Skill 是放在手边的手册（退换货该走哪几步）。手册里当然可以写“先查订单，再发邮件”，指挥手脚干活。层次不同，配合使用。'},
+ {L:2,q:'为什么官方反复提醒：安装陌生来源的 Skill 要谨慎？',o:['Skill 里的指令或脚本可能有恶意，能诱导越权、外泄数据','Skill 文件通常太大，占空间','官方无法渲染 Markdown','每个 Skill 都要付费授权'],
+  a:0,e:'Skill 可以带可执行脚本，等于让一个陌生人写的程序在你的环境里跑；正文里的指令还可能被设计成诱导模型越权操作。所以只装可信来源，陌生 Skill 先审计脚本和指令再放行。'},
+ {L:2,q:'本仓库里的 concept-microcourse 属于哪一类 Skill？',o:['模型自带的参数，改不了','项目级 Skill：放在 .workbuddy/skills/ 下，跟着仓库一起走','一个 MCP 服务器，需要单独启动','一条数据库索引'],
+  a:1,e:'它放在项目目录 .workbuddy/skills/ 里，会随仓库一起提交。别人克隆这个仓库，就能立刻用同一套技能——团队协作和跨设备复用的关键就在“知识跟着代码走”。'},
 ];
 const LCNT=[4,4,4];
 const TOTAL=12;
@@ -401,7 +446,7 @@ function render(){
         box.querySelectorAll('.opt').forEach(x=>{if(x!==el&&!(right&&x===el))x.style.opacity=.45;});
         const ex=box.querySelector('.expl');
         ex.classList.add('show',right?'ok':'no');
-        ex.innerHTML=(right?'✓ 对':'✗ 答案是 '+letters[it.a])+'：'+it.e;
+        ex.innerHTML=(right?'✓ 答对了。':'✗ 答错了，正确答案是 '+letters[it.a]+'。')+it.e;
         paint();if(answered===TOTAL)showResult();
       });
     });

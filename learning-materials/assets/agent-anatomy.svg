@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 358" width="100%" role="img" aria-labelledby="anatT anatD">
+<title id="anatT">Agent 的五个部件</title>
+<desc id="anatD">Agent 运行时由大脑 LLM、规划、记忆、工具四个部件组成，外面套一层护栏。</desc>
+<defs>
+<marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#8e8b82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<g font-family="Inter, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+<rect x="40" y="40" width="600" height="298" rx="20" fill="#f5f0e8" stroke="#e6dfd8" stroke-width="0.5"/>
+<text x="64" y="70" font-size="15" font-weight="500" fill="#141413">Agent 运行时 · 五个部件</text>
+<text x="64" y="90" font-size="12" fill="#6c6a64">少一块，就退化成聊天机器人或固定脚本</text>
+
+<rect x="64" y="108" width="552" height="54" rx="10" fill="#f9e7df" stroke="#cc785c" stroke-width="0.5"/>
+<text x="80" y="132" font-size="14" font-weight="500" fill="#8f4430">大脑 · LLM</text>
+<text x="80" y="150" font-size="12" fill="#8f4430">理解目标、推理决策；只有它，就只是个聊天机器人</text>
+
+<path d="M340 162 L340 180" stroke="#8e8b82" stroke-width="1.5" fill="none" marker-end="url(#ag)"/>
+
+<rect x="64" y="182" width="176" height="60" rx="10" fill="#efe9de" stroke="#d8cdba" stroke-width="0.5"/>
+<text x="76" y="206" font-size="13" font-weight="500" fill="#3d3d3a">规划 · Planning</text>
+<text x="76" y="226" font-size="11" fill="#6c6a64">拆成可执行步骤</text>
+
+<rect x="252" y="182" width="176" height="60" rx="10" fill="#efe9de" stroke="#d8cdba" stroke-width="0.5"/>
+<text x="264" y="206" font-size="13" font-weight="500" fill="#3d3d3a">记忆 · Memory</text>
+<text x="264" y="226" font-size="11" fill="#6c6a64">工作 · 短期 · 长期</text>
+
+<rect x="440" y="182" width="176" height="60" rx="10" fill="#efe9de" stroke="#d8cdba" stroke-width="0.5"/>
+<text x="452" y="206" font-size="13" font-weight="500" fill="#3d3d3a">工具 · Tools</text>
+<text x="452" y="226" font-size="11" fill="#6c6a64">查库 · 搜索 · 跑代码</text>
+
+<path d="M340 242 L340 260" stroke="#8e8b82" stroke-width="1.5" fill="none" marker-end="url(#ag)"/>
+
+<rect x="64" y="262" width="552" height="52" rx="10" fill="#181715"/>
+<text x="80" y="286" font-size="13" font-weight="500" fill="#faf9f5">护栏 · Guardrails</text>
+<text x="80" y="304" font-size="11" fill="#a09d96">最大步数 · 预算上限 · 工具白名单 · 敏感操作人工审批</text>
+</g>
+</svg>

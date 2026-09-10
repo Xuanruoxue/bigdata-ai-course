@@ -1,8 +1,8 @@
 # AI Agent(智能体)概念讲义
 
 > 适用范围:大数据与人工智能课程 · 概念学习与资料核查
-> 整理日期:2026-09-03
-> 说明:本文为概念讲解存档,所有引用来源见文末"参考资料"。
+> 整理日期:2026-09-03 · 最近更新:2026-09-10
+> 说明:本文为概念讲解存档,含 3 张图解;所有引用来源见文末"文献资料";自测题见第六节。
 
 ---
 
@@ -12,7 +12,10 @@
 2. 核心机制与组成
 3. 具体应用场景
 4. 容易混淆的问题与使用边界
-5. 参考资料(可核查来源)
+5. 文献资料(官方文档与学术论文)
+6. 自测(三层 · 12 题,含答案解析)
+
+> 图解索引:图 1 五个部件架构 · 图 2 ReAct 决策循环 · 图 3 Workflow 与 Agent 的路径差异(原图见 `assets/` 目录)。
 
 ---
 
@@ -54,6 +57,10 @@
 | **决策循环** | 核心机制,业界称 **ReAct 模式**:Reason(思考)→ Act(行动)→ Observe(观察) | 做事的节奏 |
 | **运行时与护栏** | 编排循环、错误处理、Guardrails(输入输出校验)、Human-in-the-loop(人工审批点) | 监工与刹车 |
 
+![Agent 的五个部件：大脑 LLM、规划、记忆、工具，外面套一层护栏](assets/agent-anatomy.svg)
+
+*图 1 · 五个部件：大脑负责想，规划负责拆，记忆负责记，工具负责做，护栏兜底。*
+
 ### 2.2 核心决策循环(伪代码)
 
 ```python
@@ -67,6 +74,10 @@ while not done:
 ```
 
 这就是"智能体化"的本质——不是一次性生成答案,而是**多轮"想一步、做一步、看一步"**的循环。
+
+![ReAct 循环：思考到行动到观察，再回到思考](assets/agent-loop.svg)
+
+*图 2 · ReAct 循环：A 思考 → B 行动 → C 观察 → 回到 A，直到完成或触发护栏上限。*
 
 ### 2.3 关键理论与主流框架
 
@@ -128,6 +139,10 @@ while not done:
 
 工程建议(Anthropic):**能用简单 Workflow 就不要上真 Agent**;自主性换来的是不确定的成本与错误复合风险。
 
+![Workflow 与 Agent 的路径对比](assets/workflow-vs-agent.svg)
+
+*图 3 · 分水岭：路径写死在代码里，还是由模型运行时决定。*
+
 **4. 单 Agent vs 多 Agent;自主 ≠ 智能**
 
 - 多 Agent 不一定更强:通信开销、成本、错误复合都可能增加,除非子任务边界清晰(不同角色分工)才值得。
@@ -150,41 +165,223 @@ while not done:
 
 ---
 
-## 五、参考资料(可核查来源)
+## 五、文献资料(官方文档与学术论文)
 
-权威与一手来源(可用于核查原始定义、机制与最佳实践):
+> 收录原则:只收**一手来源**——机构官方文档与可公开检索的学术论文原文;博客、新闻、百科等二手材料另列于第六节,不作为引用依据。
+> 核对方式:所有链接于 2026-09-10 逐条联网访问确认可达;论文的标题、作者与提交日期取自 arXiv 官方 API 返回值。
 
-1. **OpenAI 官方 Agent 定义**
-   "Agents are applications that plan, call tools, collaborate across specialists, and keep enough state to complete multi-step work."
-   https://developers.openai.com/api/docs/guides/agents
+### (一)官方文档与规范
 
-2. **OpenAI Agents SDK(Python)**
+1. **Anthropic《Building Effective AI Agents》**(2024-12-19)
+   Agent 与 workflow 的分界、五种可组合模式。
+   https://www.anthropic.com/engineering/building-effective-agents
+
+2. **OpenAI《Building agents》官方指南**
+   Agent 定义与三要素:instructions、guardrails、tools。
+   https://developers.openai.com/tracks/building-agents
+
+3. **OpenAI Agents SDK 官方文档**
    含 Agent、Handoff、Guardrails、Sessions 等核心概念与代码示例。
    https://openai.github.io/openai-agents-python/
 
-3. **LangChain Agents 概念文档**
-   Agent = Model + Harness,以及工具、状态、护栏等组成说明。
-   https://docs.langchain.com/oss/python/langchain/agents
+4. **Microsoft Learn《Agents in Microsoft Foundry》**
+   企业级 agent 服务与运行时说明。
+   https://learn.microsoft.com/en-us/azure/ai-foundry/agents/overview
 
-4. **Anthropic《Building Effective Agents》**
-   工程实践"设计圣经",重点区分 Workflow 与 Agent、何时该用 Agent。
-   https://www.anthropic.com/engineering/building-effective-agents
-
-5. **ReAct 原论文**
-   Reasoning and Acting in Language Models —— Agent 决策循环(Reason → Act → Observe)机制出处。
-   https://arxiv.org/abs/2210.03629
-
-6. **《A Survey on Large Language Model based Autonomous Agents》**
-   LLM 智能体的系统综述(规划、记忆、工具、多智能体等全景)。
-   https://arxiv.org/abs/2308.11432
-
-7. **Model Context Protocol(MCP)官方文档**
+5. **Model Context Protocol(MCP)官方规范**
    统一 Agent 接入外部工具与数据的开放标准。
    https://modelcontextprotocol.io/
 
-8. **经典人工智能教材概念**
-   "Intelligent Agent"感知 - 决策 - 行动(PEAS)定义的理论源头。
-   https://en.wikipedia.org/wiki/Intelligent_agent
+### (二)学术论文(arXiv 可查)
+
+1. **ReAct: Synergizing Reasoning and Acting in Language Models**
+   Shunyu Yao 等,2022-10-06,arXiv:2210.03629 —— Agent 决策循环(Reason → Act → Observe)机制出处。
+   https://arxiv.org/abs/2210.03629
+
+2. **Reflexion: Language Agents with Verbal Reinforcement Learning**
+   Noah Shinn 等,2023-03-20,arXiv:2303.11366 —— 失败后语言反思再重试。
+   https://arxiv.org/abs/2303.11366
+
+3. **Tree of Thoughts: Deliberate Problem Solving with Large Language Models**
+   Shunyu Yao 等,2023-05-17,arXiv:2305.10601 —— 「规划」部件的多路径搜索思路。
+   https://arxiv.org/abs/2305.10601
+
+4. **Toolformer: Language Models Can Teach Themselves to Use Tools**
+   Timo Schick 等,2023-02-09,arXiv:2302.04761 —— 模型自主调用工具的代表性工作。
+   https://arxiv.org/abs/2302.04761
+
+5. **A Survey on Large Language Model based Autonomous Agents**
+   Lei Wang 等,2023-08-22,arXiv:2308.11432 —— 智能体「规划—记忆—工具」组成框架综述。
+   https://arxiv.org/abs/2308.11432
+
+### (三)延伸阅读(非一手,仅作线索)
+
+1. **LangChain Agents 概念文档**(框架官方文档):https://docs.langchain.com/oss/python/langchain/agents
+2. **Lilian Weng(OpenAI)《LLM Powered Autonomous Agents》**(个人博客):https://lilianweng.github.io/posts/2023-06-23-agent/
+3. **Simon Willison《The Lethal Trifecta for AI Agents》**(个人博客):https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+4. **Wikipedia "Intelligent Agent"**(百科,仅用于追溯经典 AI 教材概念):https://en.wikipedia.org/wiki/Intelligent_agent
+
+---
+
+## 六、自测(三层 · 12 题)
+
+> **难度分三层**:🟢 入门(基础)　→　🟡 进阶(原理与实战)　→　🔴 挑战(细节辨析)。
+> **达标线**:入门 4/4 + 进阶 ≥3 + 挑战 ≥2。
+> **用法**:先自己选,选完再对照本节末尾的「答案与解析」;错题重点看解析里"错在哪"。
+
+### 🟢 入门(4 题 · 基础 · 需全对)
+
+**1. 看到“Agent 智能体”这个词，它和普通聊天机器人最根本的差别在哪？**
+
+- A. Agent 用了参数更多的模型
+- B. 聊天机器人只能聊天，Agent 会调工具、看结果、再决定下一步
+- C. Agent 的回复速度更快
+- D. Agent 一定需要联网
+
+**2. Agent 最经典的“配方”是哪一组？**
+
+- A. 提示词＋数据库＋网页
+- B. 脚本＋按钮＋定时任务
+- C. LLM＋规划＋记忆＋工具
+- D. 更大的模型＋更多的训练数据
+
+**3. 把 Agent 比作一个实习生，它的“大脑”对应下面哪个？**
+
+- A. 存放记忆的数据库
+- B. 大语言模型（LLM），负责理解和推理
+- C. 能调用的 API 清单
+- D. 跑代码的操作系统
+
+**4. Agent 靠什么真正影响现实世界，而不是只“嘴上说说”？**
+
+- A. 把提示词写得特别长
+- B. 记住更多轮对话
+- C. 调用工具：查数据库、搜网页、发邮件、执行代码
+- D. 换成更贵的模型
+
+---
+
+### 🟡 进阶(4 题 · 原理与实战 · 达标 ≥3)
+
+**5. ReAct 这个名字来自 Reason＋Act，它每一轮的正确顺序是？**
+
+- A. 先行动，再看结果，最后才想为什么要做
+- B. 先观察，再思考，然后直接结束
+- C. 一次推理就想清全部步骤，不用循环
+- D. 先思考该做什么 → 调工具行动 → 看结果，再回到思考
+
+**6. 按常见分法，Agent 的记忆分成哪几类？**
+
+- A. 工作记忆、短期记忆、长期记忆
+- B. 只分硬盘和内存
+- C. 对话记录和文件两类
+- D. 提示词和模型参数两类
+
+**7. Agent 一旦陷入死循环最烧钱，下面哪种设计最能兜住这个风险？**
+
+- A. 把系统提示词写得更长
+- B. 换成响应更快的模型
+- C. 护栏：设步数上限、超时时间、预算上限
+- D. 把上下文窗口扩到最大
+
+**8. 新加坡 GovTech 把 Agent 的内部过程概括成哪四个动作？**
+
+- A. 观察 → 推理 → 行动 → 学习
+- B. 编译 → 运行 → 报错 → 修复
+- C. 提问 → 回答 → 打分 → 结束
+- D. 抓取 → 存储 → 显示 → 删除
+
+---
+
+### 🔴 挑战(4 题 · 细节辨析 · 达标 ≥2)
+
+**9. 同样是把 AI 用起来，Workflow 和 Agent 的关键分界在哪？**
+
+- A. Workflow 不使用大模型
+- B. 关键看“路径谁定”：Workflow 由代码预先写死，Agent 由模型运行时自己决定
+- C. Agent 不需要工具
+- D. Workflow 只能处理英文
+
+**10. Anthropic 的工程建议是“能不用 Agent 就不用”，那什么情况才值得上 Agent？**
+
+- A. 任何任务都应该上 Agent，越先进越好
+- B. 只有聊天场景才用
+- C. 任务步骤事先说不清、需要模型自己临场判断时才用
+- D. 只有超长文本任务才用
+
+**11. 世界经济论坛引用的 ISO 定义里，AI Agent 被描述成什么？**
+
+- A. 只会生成文字的模型
+- B. 一种数据库管理系统
+- C. 一种编程语言
+- D. 用传感器感知环境、用效应器响应，并具有一定自主性与权限的实体
+
+**12. Agent、MCP、Skill 三个词经常一起出现，它们是什么关系？**
+
+- A. 三者是同一层概念，可以互换说法
+- B. MCP 和 Skill 是零件，Agent 是组装并指挥它们的系统
+- C. 装上了 MCP 就不能再有 Agent
+- D. Skill 只能用于聊天，不能用于 Agent
+
+---
+
+### 答案与解析
+
+> 建议 12 题全部做完后再对照。答错不可怕,关键是看清"当时为什么会那么想"。
+
+#### 🟢 入门
+
+**1. 答案:B**
+
+关键不在模型大小或速度，而在“行动→看结果→再决定”这个闭环。聊天机器人答完就结束了；Agent 会主动调工具（查数据库、搜网页、跑代码），再根据拿回来的结果判断下一步，直到把事情办成。
+
+**2. 答案:C**
+
+这是 Lilian Weng（OpenAI）那篇著名的 Agent 文章里的分解：LLM 负责“想”，规划负责“拆步骤”，记忆负责“别忘事”，工具负责“真去干”。四样缺一，能力就瘸一条腿。
+
+**3. 答案:B**
+
+LLM 就是那个会思考的大脑：听懂你要什么、判断该先做什么。数据库（记忆）和 API（工具）都只是外挂，是大脑指挥下的笔记本和手脚。
+
+**4. 答案:C**
+
+工具是 Agent 的手脚，专业说法叫“效应器”。提示词再长、模型再贵，不调工具就只能在对话框里输出文字；只有工具能把决策变成真实动作。
+
+#### 🟡 进阶
+
+**5. 答案:D**
+
+ReAct 的灵魂是“边想边做、做完再看”：想一步 → 做一步 → 看结果 → 再想下一步。之所以要循环，是因为真实结果常和预想不一样，必须拿到反馈才能修正。
+
+**6. 答案:A**
+
+工作记忆管“这次任务进行到哪了”，短期记忆管“本次会话聊过什么”，长期记忆管“跨会话保留的用户偏好和历史”（通常存进向量库）。分开是因为它们解决的是三种不同时间尺度的问题。
+
+**7. 答案:C**
+
+护栏是给循环设的“硬边界”：最多走几步、最多花多久、最多花多少钱，到线就强制停。提示词和模型只是“建议”，只有硬性上限能真正拦住无限重试。
+
+**8. 答案:A**
+
+Observing（看）→ Reasoning（想）→ Acting（做）→ Learning（从结果里学），然后循环。这和 ReAct 是同一个意思，只是多强调了一步“学习”——把经验留下来下次用。
+
+#### 🔴 挑战
+
+**9. 答案:B**
+
+判断标准是“控制权在谁手里”。步骤固定、提前排好 → Workflow，便宜又可控；步骤要根据中间结果临时决定 → Agent。两者都能用 LLM、都能调工具，区别只在谁掌舵。
+
+**10. 答案:C**
+
+官方原话是：先用最简单的方案，不够再升级。固定的活儿用 Workflow 更便宜可靠；只有“说不清要几步、必须走一步看一步”的开放任务，Agent 的灵活性才值回成本。
+
+**11. 答案:D**
+
+ISO 强调两点：会“感知”环境，能“有授权地改变”环境。这比“会聊天”严格得多——它把 Agent 定义成一个有自主性和行动权限的实体，也是它和纯对话模型的分水岭。
+
+**12. 答案:B**
+
+分三层就清楚了：MCP 管“怎么把工具接进来”，Skill 管“这类活该怎么做”，Agent 是决定“现在用哪个零件”的组织者。零件再多，也得有人指挥。
 
 ---
 
